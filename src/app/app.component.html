@@ -9,9 +9,10 @@
         <mat-divider></mat-divider>
 
         <div class="d-grid gap-2 mt-5">
-          <button class="btn btn-lg btn-warning" type="button" routerLink="login">Вход</button>
+          <button *ngIf="!isAuth" class="btn btn-lg btn-warning" type="button" routerLink="login">Вход</button>
+          <button *ngIf="!isAuth" class="btn btn-lg btn-warning" type="button" routerLink="register">Регистрация</button>
           <button class="btn btn-lg btn-warning" type="button" routerLink="home">Главная</button>
-          <button  class="btn btn-lg btn-warning" type="button" routerLink="">База2</button>
+          <button  class="btn btn-lg btn-danger" type="button" (click)="onLogout()">Выход</button>
         </div>
 
 
@@ -30,6 +31,7 @@
           <button mat-icon-button class="example-icon">
             <mat-icon>share</mat-icon>
           </button>
+          <span *ngIf="isAuth">{{sessia?.userName}}</span>
         </mat-toolbar>
 
 

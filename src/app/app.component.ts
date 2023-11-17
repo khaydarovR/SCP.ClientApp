@@ -11,9 +11,12 @@ import { products as data } from './data/product'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { PageNotifyService } from './services/error.service';
+import { PageNotifyService } from './services/page-notify.service';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {AuthService} from "./services/auth.service";
+import {ISessia} from "./data/sessia";
+
 
 
 @Component({
@@ -36,26 +39,36 @@ import {MatListModule} from "@angular/material/list";
 })
 export class AppComponent implements OnInit {
   constructor(
-      private pageNotifyService: PageNotifyService
+      private pageNotifyService: PageNotifyService,
+      private authService: AuthService
     ){
-    this.products = []
     this.isLoading = true;
   }
 
-  title = 'TsBosClient';
 
-  products: IProduct[] = data;
-
-  details: Boolean = true;
 
   isLoading: Boolean = false;
+  isAuth: Boolean = false;
   showFiller: boolean = false;
+
+  sessia? : ISessia | null
 
 
   ngOnInit(): void {
-
+    this.authService.session$.subscribe((session: ISessia|null) => {
+      this.sessia = session;
+      this.isAuth = session !== null;
+    });
+    let sessia = this.authService.getSession()
+    if (sessia !== null){
+      this.pageNotifyService.push('Вошли в аккаунт: ' + sessia.userName)
+    }
   }
 
+  onLogout(): void{
+    this.authService.logout()
+    location.assign("login")
+  }
 
 
 }

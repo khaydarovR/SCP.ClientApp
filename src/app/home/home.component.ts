@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.jwt = this.authService.getSession();
+
   }
 
   logout() {
