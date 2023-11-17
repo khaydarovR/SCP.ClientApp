@@ -1,29 +1,50 @@
+<div class="cover-container">
+    <mat-drawer-container class="example-container" autosize>
+      <mat-drawer #drawer class="example-sidenav" mode="side">
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <button (click)="showFiller = !showFiller" mat-raised-button>
+          Toggle extra text
+        </button>
 
-<mat-toolbar>
-  <span>My Application</span>
-  <span>Second Line</span>
-  <span class="example-spacer"></span>
-  <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
-</mat-toolbar>
+        <mat-divider></mat-divider>
 
-  <button mat-raised-button 
-  [ngClass]="{'btn btn-danger': details}" 
-  (click)="details=!details">
-  {{details? "Close" : "Opoen"}}
-  </button>
+        <div class="d-grid gap-2 mt-5">
+          <button class="btn btn-lg btn-warning" type="button" routerLink="login">Вход</button>
+          <button class="btn btn-lg btn-warning" type="button" routerLink="home">Главная</button>
+          <button  class="btn btn-lg btn-warning" type="button" routerLink="">База2</button>
+        </div>
 
 
-<div class="container">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </mat-drawer>
 
-  <div class="m-3" *ngIf="details">
-    
-    <app-product 
-    *ngFor="let prod of products"
-    [product]="prod"/>
-    
-  </div>    
+      <div class="example-sidenav-content">
+        <mat-toolbar>
+          <button (click)="drawer.toggle()" mat-icon-button class="example-icon">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span>My App</span>
+          <span class="example-spacer"></span>
+          <button mat-icon-button class="example-icon favorite-icon">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button mat-icon-button class="example-icon">
+            <mat-icon>share</mat-icon>
+          </button>
+        </mat-toolbar>
+
+
+        <main role="main" class="cover-container">
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+
+    </mat-drawer-container>
+
 </div>
 
 
-<router-outlet></router-outlet>
+
+
+
+
+

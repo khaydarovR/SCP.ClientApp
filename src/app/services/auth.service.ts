@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
 import {IProduct} from "../remote/dto/product";
 import {BASE_URL} from "../data/myConst";
-import {ISignInResponse} from "../remote/dto/ISignInResponse";
+import {ISignInResponse} from "../remote/response/ISignInResponse";
 import {ICreateAccountDTO} from "../remote/dto/ICreateAccountDTO";
+import {PageNotifyService} from "./error.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  signInResponse!: string
-  constructor(private client: HttpClient) {
+  signInResponse!: ISignInResponse
+  constructor(private client: HttpClient, private pageNotifyService: PageNotifyService) {
 
   }
 
@@ -27,20 +29,21 @@ export class AuthService {
     });
   }
 
-  login(login: string, pw: string): string {
-    this.client.get<string>(BASE_URL + "").subscribe({
+  login(login: string, pw: string): ISignInResponse {
+    this.client.get<ISignInResponse>(BASE_URL + `api/Auth/SignIn?Email=${login}&Password=${pw}`).subscribe({
       next: (response) => {
         this.signInResponse = response
-        this.setSession({token: response})
+        console.log(response)
+        this.setSession(response)
       },
-      error: (e) => console.error(e),
+      error: (e) => this.pageNotifyService.handle(e),
       complete: () => console.info('complete')
     })
     return this.signInResponse
   }
 
-  private setSession(authResult: {token: string}) {
-    const token = authResult.token;
+  private setSession(sessia: ISignInResponse) {
+    const token = sessia.jwt;
     localStorage.setItem('id_token', token);
   }
 
@@ -52,4 +55,5 @@ export class AuthService {
   logout() {
     localStorage.removeItem("id_token");
   }
+
 }
