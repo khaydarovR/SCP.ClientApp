@@ -1,5 +1,44 @@
-<div class="jumbotron">
-  <h1>Navbar example</h1>
-  <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-  <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs »</a>
+<div class="container m-5">
+  <div class="row">
+    <div class="col">
+      <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to top right, #FFFF00, #FFA500);">
+        <div class="card-header">
+
+          <nav class="navbar navbar-light justify-content-between">
+            <a class="navbar-brand">Сейфы</a>
+            <button mat-mini-fab color="white" (click)="addSafe()">
+              <mat-icon fontIcon="add_circle"></mat-icon>
+            </button>
+          </nav>
+
+        </div>
+        <div class="card-body">
+          <app-safe-item></app-safe-item>
+          <app-safe-item></app-safe-item>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col">
+      <div class="card text-dark bg-light mb-3">
+        <div class="card-header">Header</div>
+        <div class="card-body">
+          <h5 class="card-title">Light card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col">
+      <div class="card text-dark bg-light mb-3">
+        <div class="card-header">Header</div>
+        <div class="card-body">
+          <h5 class="card-title">Light card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

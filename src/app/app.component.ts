@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
     });
     let sessia = this.authService.getSession()
     if (sessia !== null){
-      this.pageNotifyService.push('Вошли в аккаунт: ' + sessia.userName)
+      this.pageNotifyService.push('Учетная запись: ' + sessia.userName)
     }
   }
 

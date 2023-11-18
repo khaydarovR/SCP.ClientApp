@@ -1,0 +1,21 @@
+<div class="container p-3">
+  <h1 mat-dialog-title>Создание сейфа</h1>
+
+  <mat-form-field appearance="outline" style="width: 300px">
+    <mat-label>Название</mat-label>
+    <input matInput [(ngModel)]="data.title">
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+
+  <mat-form-field appearance="outline" style="width: 300px">
+    <mat-label>Описание</mat-label>
+    <input matInput [(ngModel)]="data.dsc">
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false" >Отмена</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  </div>
+
+</div>

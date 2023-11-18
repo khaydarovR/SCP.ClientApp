@@ -25,6 +25,17 @@ export class PageNotifyService {
     }
   }
 
+  public pushMany(messages: string[]){
+    for (const message of messages) {
+      if (this.buffer.length === 0 && !this.isRunning) {
+        this.showMessage(message);
+        this.showMessages();
+      } else {
+        this.buffer.push(message);
+      }
+    }
+  }
+
   private showMessages() {
     this.isRunning = true;
 
