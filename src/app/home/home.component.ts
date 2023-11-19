@@ -12,6 +12,7 @@ import {MSafeCreateComponent} from "../m-safe-create/m-safe-create.component";
 import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {PageNotifyService} from "../services/page-notify.service";
 import {SafesComponent} from "../safes/safes.component";
+import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 
 @Component({
   selector: 'app-home',
@@ -20,57 +21,17 @@ import {SafesComponent} from "../safes/safes.component";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  public safe = {
-    title: '',
-    dsc: '',
+
+
+  constructor(private safeService: SafeService,
+              private notify: PageNotifyService,
+              public dialog: MatDialog) {
   }
 
-  constructor(public dialog: MatDialog,
-              private safeService: SafeService,
-              private notify: PageNotifyService) { }
 
-  ngOnInit(): void {
 
-  }
 
-  addSafe(){
-    this.openDialog()
-  }
-
-  private openDialog(): void {
-    const dialogRef = this.dialog.open(MSafeCreateComponent, {
-      data: this.safe,
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === false){
-        return
-      }
-      this.safe = result;
-      this.sendRequestForCreate(this.safe)
-    });
-  }
-
-  private sendRequestForCreate(safe: {title: string, dsc: string}) {
-    let dto: ICreateSafeDTO =  {
-      description: safe.dsc,
-      title: safe.title
-    }
-    let result = this.safeService.createSafe(dto)
-
-    result.subscribe( r =>{
-      if (r === true){
-        this.safe.title = ''
-        this.safe.dsc = ''
-        this.notify.push('Сейф успешно создан')
-      }
-      else{
-        this.notify.pushMany(r as string[])
-      }
-    })
-  }
 
 }

@@ -1,7 +1,9 @@
-<div class="card my-2 border-0 rounded-4 bg-warning-subtle">
+<div class="card my-2 border-0 rounded-4" style="background-color: #FCEC52">
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a class="btn btn-dark aligned" (click)="readRecord()">Go somewhere</a>
+    <h2 class="card-title">{{safe?.title}}</h2>
+    <p class="card-text">{{safe?.description??''}}</p>
+    <a class="btn btn-dark aligned">Go somewhere</a>
   </div>
 </div>
+
+

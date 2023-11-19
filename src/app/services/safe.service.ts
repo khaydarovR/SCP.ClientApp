@@ -4,6 +4,7 @@ import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {BASE_URL} from "../data/myConst";
 import {PageNotifyService} from "./page-notify.service";
+import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,10 @@ export class SafeService {
     );
   }
 
-  getLinkedSafe(dto: ICreateSafeDTO):Observable<boolean| string[]>{
+  getLinkedSafes():Observable<Array<IGetLinkedSafeResponse> | string[]>{
 
-    return this.client.get(BASE_URL + 'api/Safe/GetLinked').pipe(
+    return this.client.get<Array<IGetLinkedSafeResponse>>(BASE_URL + 'api/Safe/GetLinked').pipe(
       tap(r => console.log(r)),
-      map(r => r === true),
       catchError((e) => {
         typeof(e.error.message) == "string" ? this.notify.push(e.error.message): ''
         return of(e.error);

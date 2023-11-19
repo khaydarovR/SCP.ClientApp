@@ -1,17 +1,28 @@
 <div >
-    <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to bottom right,  rgba(255,165,0,0.49), rgba(255,255,0,0.32));">
-        <div class="card-header">
+  <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to top left, #00ffe7, #fcec52);">
+
+    <div class="card-header">
 
             <nav class="navbar navbar-light justify-content-between">
-                <a class="navbar-brand">Записи</a>
-                <button (click)="createRecord()"  mat-mini-fab color="white" >
+                <a class="navbar-brand">Сейфы</a>
+                <button (click)="addSafe()" mat-mini-fab color="white" >
                     <mat-icon fontIcon="add"></mat-icon>
                 </button>
             </nav>
 
-        </div>
-        <div class="card-body">
-            <app-safe-item></app-safe-item>
+    </div>
+
+
+    <div class="card-body">
+
+          <div *ngFor="let safe of safes">
+            <app-safe-item [safe]="safe"></app-safe-item>
+          </div>
+
         </div>
     </div>
+
+
 </div>
+
+
