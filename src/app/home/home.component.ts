@@ -11,11 +11,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {MSafeCreateComponent} from "../m-safe-create/m-safe-create.component";
 import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {PageNotifyService} from "../services/page-notify.service";
+import {SafesComponent} from "../safes/safes.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, SafeItemComponent],
+    imports: [CommonModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, SafeItemComponent, SafesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

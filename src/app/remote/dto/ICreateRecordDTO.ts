@@ -6,5 +6,5 @@ export interface ICreateRecordDTO {
   forResource: string;
   safeId: string;
   signature: string;
-  clientPubK: string;
+  clientPrivK: string;
 }
