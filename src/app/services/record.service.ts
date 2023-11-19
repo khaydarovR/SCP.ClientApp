@@ -8,6 +8,7 @@ import transformJavaScript from "@angular-devkit/build-angular/src/tools/esbuild
 import {EcnryptorService} from "./ecnryptor.service";
 import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IReadRecordDTO} from "../remote/dto/IReadRecordDTO";
+import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
 
 @Injectable({
   providedIn: 'root'
@@ -111,8 +112,6 @@ export class RecordService {
   }
 
 
-
-
   //Methods for get and read record
   public async readRecord(recId: string): Promise<IReadRecordResponse> {
     let pubK = this.cryptoService.getPubKFromClient();
@@ -140,6 +139,15 @@ export class RecordService {
       recId: recId
     }
 
-    return this.http.post<IReadRecordResponse>(`${BASE_URL}api/Record/Read?`, data);
+    return this.http.post<IReadRecordResponse>(`${BASE_URL}api/Record/Read`, data);
+  }
+
+  getAllRecords(safeId: string):Observable<IGetRecordResponse[]> {
+    return this.sendRequestForGetAllRecords(safeId)
+
+  }
+
+  private sendRequestForGetAllRecords(safeId: string){
+    return this.http.get<IGetRecordResponse[]>(`${BASE_URL}api/Record/GetAll?safeId=${safeId}`);
   }
 }

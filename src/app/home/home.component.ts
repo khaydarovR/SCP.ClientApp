@@ -13,17 +13,16 @@ import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {PageNotifyService} from "../services/page-notify.service";
 import {SafesComponent} from "../safes/safes.component";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
+import {RecordsComponent} from "../records/records.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-    imports: [CommonModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, SafeItemComponent, SafesComponent],
+  imports: [CommonModule, MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, SafeItemComponent, SafesComponent, RecordsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
-
 
   constructor(private safeService: SafeService,
               private notify: PageNotifyService,
@@ -31,6 +30,10 @@ export class HomeComponent {
   }
 
 
+  public safeToSend?: IGetLinkedSafeResponse
+  onSafeSelectedInChild(safe: IGetLinkedSafeResponse) {
+    this.safeToSend = safe
+  }
 
 
 

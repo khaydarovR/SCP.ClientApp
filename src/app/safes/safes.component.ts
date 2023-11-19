@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
@@ -20,6 +20,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class SafesComponent implements OnInit{
   public safes = Array<IGetLinkedSafeResponse>()
+  @Output() safeSelected = new EventEmitter<IGetLinkedSafeResponse>();
 
   safeForCreate = {
     title: '',
@@ -29,6 +30,10 @@ export class SafesComponent implements OnInit{
   }
   addSafe(){
     this.openDialog()
+  }
+
+  onSafeSelected(safe: IGetLinkedSafeResponse) {
+    this.safeSelected.emit(safe);  // Emit the event with selected safe
   }
 
   private openDialog(): void {

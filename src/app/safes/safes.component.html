@@ -15,7 +15,7 @@
 
     <div class="card-body">
 
-          <div *ngFor="let safe of safes">
+          <div (click)="onSafeSelected(safe)" *ngFor="let safe of safes">
             <app-safe-item [safe]="safe"></app-safe-item>
           </div>
 

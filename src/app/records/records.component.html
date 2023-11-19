@@ -1,0 +1,28 @@
+<div >
+  <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to top left, #0081a7, #fcec52);">
+
+    <div class="card-header">
+
+      <nav class="navbar navbar-light justify-content-between">
+        <a class="navbar-brand">Записи</a>
+        <button (click)="createRecord()" mat-mini-fab color="white" >
+          <mat-icon fontIcon="add"></mat-icon>
+        </button>
+      </nav>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <div *ngFor="let record of records">
+        <app-record-item [record]="record"></app-record-item>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+

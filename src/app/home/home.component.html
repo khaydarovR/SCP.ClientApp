@@ -1,12 +1,12 @@
 <div class="container m-5">
   <div class="row align-items-start">
     <div class="col">
-      <app-safes></app-safes>
+      <app-safes (safeSelected)="onSafeSelectedInChild($event)"></app-safes>
     </div>
 
 
     <div class="col">
-      <app-safes></app-safes>
+      <app-records [inputSafe]="safeToSend"></app-records>
     </div>
 
 
