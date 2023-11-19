@@ -27,7 +27,7 @@ export class SafesComponent {
           "pw1",
           "sec1",
           "res1",
-          "d1992f89-d7a1-4abc-8158-c7847599e7f2"
+          "39332870-484c-4c4a-899e-65446edf14a4"
       )
     }
     catch (e){
