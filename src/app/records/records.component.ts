@@ -8,6 +8,8 @@ import {RecordItemComponent} from "../record-item/record-item.component";
 import {RecordService} from "../services/record.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
+import {Router} from "@angular/router";
+import {routes} from "../app.routes";
 
 @Component({
   selector: 'app-records',
@@ -20,7 +22,7 @@ export class RecordsComponent implements OnInit{
   records!: IGetRecordResponse[]
   private _inputSafe?: IGetLinkedSafeResponse
 
-  constructor(private recordService: RecordService) {
+  constructor(private recordService: RecordService, private router: Router) {
   }
 
   @Input()
@@ -39,7 +41,7 @@ export class RecordsComponent implements OnInit{
 
   valueUpdated() {
     console.log('value updated in records component')
-    console.log(this._inputSafe);
+    console.log(this.inputSafe);
     if (this._inputSafe?.id != undefined){
       console.log('request to get all from ' + this._inputSafe.id)
       this.recordService.getAllRecords(this._inputSafe!.id).subscribe({
@@ -51,18 +53,8 @@ export class RecordsComponent implements OnInit{
 
 
   createRecord() {
-    return
-    try {
-      let res = this.recordService.createRecord(
-        "title1",
-        "log1",
-        "pw1",
-        "sec1",
-        "res1",
-        "f51e78e6-3fd4-4cc8-91ea-198c6c54acea"
-      )
-    } catch (e) {
-      console.log(e)
+    if (this.inputSafe){
+      this.router.navigate(['/create-record', this.inputSafe.id, this.inputSafe.title]);
     }
   }
 

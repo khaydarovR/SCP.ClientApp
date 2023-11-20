@@ -10,6 +10,7 @@ import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse"
 import {MSafeCreateComponent} from "../m-safe-create/m-safe-create.component";
 import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {MatDialog} from "@angular/material/dialog";
+import {sample} from "rxjs";
 
 @Component({
   selector: 'app-safes',
@@ -21,6 +22,9 @@ import {MatDialog} from "@angular/material/dialog";
 export class SafesComponent implements OnInit{
   public safes = Array<IGetLinkedSafeResponse>()
   @Output() safeSelected = new EventEmitter<IGetLinkedSafeResponse>();
+
+  selectedSafeName = ''
+  selectedSafeId = ''
 
   safeForCreate = {
     title: '',
@@ -34,6 +38,8 @@ export class SafesComponent implements OnInit{
 
   onSafeSelected(safe: IGetLinkedSafeResponse) {
     this.safeSelected.emit(safe);  // Emit the event with selected safe
+    this.selectedSafeName = safe.title
+    this.selectedSafeId = safe.id
   }
 
   private openDialog(): void {
@@ -93,4 +99,5 @@ export class SafesComponent implements OnInit{
     })
   }
 
+  protected readonly sample = sample;
 }

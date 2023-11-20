@@ -4,7 +4,9 @@
     <div class="card-header">
 
             <nav class="navbar navbar-light justify-content-between">
-                <a class="navbar-brand">Сейфы</a>
+                <p *ngIf="selectedSafeName == ''" class="navbar-brand">Сейфы</p>
+                <p *ngIf="selectedSafeName != ''" class="navbar-brand">{{selectedSafeName}}</p>
+
                 <button (click)="addSafe()" mat-mini-fab color="white" >
                     <mat-icon fontIcon="add"></mat-icon>
                 </button>
@@ -16,7 +18,7 @@
     <div class="card-body">
 
           <div (click)="onSafeSelected(safe)" *ngFor="let safe of safes">
-            <app-safe-item [safe]="safe"></app-safe-item>
+            <app-safe-item [safe]="safe" [selectedSafeId]="selectedSafeId"></app-safe-item>
           </div>
 
         </div>

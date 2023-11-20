@@ -16,8 +16,7 @@ export class SafeItemComponent{
 
 
   @Input() safe!: IGetLinkedSafeResponse;
-
-  isSelected: boolean = false
+  @Input() selectedSafeId!: string;
 
   constructor(private recordService: RecordService) {
   }

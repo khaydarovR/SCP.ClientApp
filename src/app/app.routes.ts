@@ -6,6 +6,7 @@ import {HomeComponent} from "./home/home.component";
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {CreateRecordComponent} from "./create-record/create-record.component";
 
 export const routes: Routes = [
   {
@@ -15,6 +16,10 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'create-record/:id/:title',
+    component: CreateRecordComponent
   },
   {
     path: 'home',
