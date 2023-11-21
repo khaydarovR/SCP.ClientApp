@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, map, Observable, of, Subject, tap, throwError} from "rxjs";
-import {IProduct} from "../remote/dto/product";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {catchError, map, Observable, of, Subject, tap} from "rxjs";
 import {BASE_URL} from "../data/myConst";
 import {ISignInResponse} from "../remote/response/ISignInResponse";
 import {ICreateAccountDTO} from "../remote/dto/ICreateAccountDTO";
 import {PageNotifyService} from "./page-notify.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {ISessia} from "../data/sessia";
+
 @Injectable({
   providedIn: 'root'
 })

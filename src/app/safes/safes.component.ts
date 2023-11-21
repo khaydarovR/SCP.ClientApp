@@ -1,10 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {SafeItemComponent} from "../safe-item/safe-item.component";
 import {SafeService} from "../services/safe.service";
-import {RecordService} from "../services/record.service";
 import {PageNotifyService} from "../services/page-notify.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {MSafeCreateComponent} from "../m-safe-create/m-safe-create.component";

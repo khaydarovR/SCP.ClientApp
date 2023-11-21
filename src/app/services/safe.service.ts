@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
 import {catchError, map, Observable, of, tap} from "rxjs";

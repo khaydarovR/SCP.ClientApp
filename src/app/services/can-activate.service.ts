@@ -1,6 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 
 class UserToken {}
 class Permissions {

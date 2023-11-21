@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable({
