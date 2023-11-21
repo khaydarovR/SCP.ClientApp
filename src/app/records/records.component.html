@@ -1,5 +1,5 @@
 <div >
-  <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to top left, #0081a7, #fcec52);">
+  <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to bottom right, #00ffe7, #fcec52);">
 
     <div class="card-header">
 
@@ -16,7 +16,7 @@
     <div class="card-body">
 
       <div *ngFor="let record of records">
-        <app-record-item [record]="record"></app-record-item>
+        <app-record-item [record]="record" (click)="onSelectRecord(record.id)"></app-record-item>
       </div>
 
     </div>

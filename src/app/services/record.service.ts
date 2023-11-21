@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {firstValueFrom, Observable} from 'rxjs';
 import {RsaCryptoService} from "./rsa-crypto.service";
 import {ICreateRecordDTO} from "../remote/dto/ICreateRecordDTO";
 import {BASE_URL} from "../data/myConst";
-import transformJavaScript from "@angular-devkit/build-angular/src/tools/esbuild/javascript-transformer-worker";
 import {EcnryptorService} from "./ecnryptor.service";
 import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IReadRecordDTO} from "../remote/dto/IReadRecordDTO";
@@ -19,12 +18,12 @@ export class RecordService {
   constructor(private http: HttpClient, private cryptoService: RsaCryptoService,
               private encryptorForServer: EcnryptorService) {}
 
-  async createRecord(title: string,
+  public async createRecord(title: string,
                      login: string,
                      pw: string,
                      secret: string,
                      forResource: string,
-                     safeId: string): Promise<boolean> {
+                     safeId: string): Promise<boolean|string[]> {
     const publicKeyFromSafe = await this.getPublicKey(safeId);
 
     // Encrypt all secrets
@@ -90,15 +89,32 @@ export class RecordService {
 
 // Send post data function
   private async postRecordData(recordData: ICreateRecordDTO) {
-    let res = false;
     try {
-      const response = await this.http.post<boolean>(BASE_URL + this.endpoint, recordData).toPromise();
+      const response = await this.http.post<boolean|string[]>(BASE_URL + this.endpoint, recordData, { observe: 'response' }).toPromise();
       console.log(response);
-      res = true;
+
+      // Check status code - return boolean or errors list
+      if (response!.status === 200) {
+        return response!.body as boolean;
+      } else {
+        // As per docs, body should contain the array of error strings on non-200 status.
+        return response!.body as string[];
+      }
     } catch (e) {
-      console.log(e);
+      if (e instanceof HttpErrorResponse) {
+        console.error(e);
+        if (e.error != null && Array.isArray(e.error)) {
+          // We're expecting the errors to be in the HttpErrorResponse's `error` field,
+          // when the response couldn't be delivered successfully at all
+          return e.error as string[];
+        } else {
+          return [`Unexpected error: ${e.message}`];
+        }
+      } else {
+        console.error(e);
+        return [`Unexpected error: ${e}`];
+      }
     }
-    return res;
   }
 
 

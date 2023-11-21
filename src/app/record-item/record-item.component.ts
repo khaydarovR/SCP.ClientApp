@@ -11,4 +11,6 @@ import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
 })
 export class RecordItemComponent {
   @Input() record!: IGetRecordResponse
+
+
 }

@@ -1,15 +1,13 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, Input, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {SafeItemComponent} from "../safe-item/safe-item.component";
-import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {RecordItemComponent} from "../record-item/record-item.component";
 import {RecordService} from "../services/record.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
 import {Router} from "@angular/router";
-import {routes} from "../app.routes";
 
 @Component({
   selector: 'app-records',
@@ -21,6 +19,7 @@ import {routes} from "../app.routes";
 export class RecordsComponent implements OnInit{
   records!: IGetRecordResponse[]
   private _inputSafe?: IGetLinkedSafeResponse
+  private _selectedRecordId?: string
 
   constructor(private recordService: RecordService, private router: Router) {
   }
@@ -51,13 +50,19 @@ export class RecordsComponent implements OnInit{
     }
   }
 
-
   createRecord() {
     if (this.inputSafe){
       this.router.navigate(['/create-record', this.inputSafe.id, this.inputSafe.title]);
     }
   }
 
-
-
+  onSelectRecord(recId: string) {
+    this._selectedRecordId = recId
+    this.recordService.readRecord(this._selectedRecordId).then(r =>{
+      console.log(r.title)
+      console.log(r.eLogin)
+      console.log(r.ePw)
+      console.log(r.eSecret)
+    })
+  }
 }
