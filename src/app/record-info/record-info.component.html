@@ -1,30 +1,72 @@
-<div class="container mt-5 mb-5 d-flex justify-content-center">
-  <div class="card px-1 py-4">
+<div class="container d-flex justify-content-center">
+  <div class="card py-4" *ngIf="inputRec">
     <div class="card-body">
-      <h6 class="card-title mb-3">This appointment is for</h6>
-      <div class="d-flex flex-row"> <label class="radio mr-1"> <input type="radio" name="add" value="anz" checked> <span> <i class="fa fa-user"></i> Anz CMK </span> </label> <label class="radio"> <input type="radio" name="add" value="add"> <span> <i class="fa fa-plus-circle"></i> Add </span> </label> </div>
-      <h6 class="information mt-4">Please provide following information about Anz CMK</h6>
+      <div class="d-flex justify-content-between m-0 p-0">
+        <div>
+          <mat-slide-toggle color="primary" checked="false" [(ngModel)]="isChecked2">Открыть</mat-slide-toggle>
+          <mat-slide-toggle color="primary" checked="false" [(ngModel)]="isChecked">Редактирование: {{isChecked}}</mat-slide-toggle>
+        </div>
+
+        <button mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <!-- <label for="name">Name</label> --> <input class="form-control" type="text" placeholder="Name"> </div>
+            <input class="form-control" disabled type="text" [(ngModel)]="inputRec.id" placeholder="ID"
+            ></div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <div class="input-group"> <input class="form-control" type="text" placeholder="Mobile"> </div>
+            <input class="form-control" type="text" placeholder="Название"
+                   [(ngModel)]="inputRec.title" > </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Для ресурса"
+                     [(ngModel)]="inputRec.forResource"> </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Логин"
+                     [(ngModel)]="inputRec.eLogin"> </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <div class="input-group"> <input class="form-control" type="text" placeholder="Email ID"> </div>
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Пароль"
+                     [(ngModel)]="inputRec.ePw"  > </div>
           </div>
         </div>
       </div>
-      <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"> <small class="agree-text">By Booking this appointment you agree to the</small> <a href="#" class="terms">Terms & Conditions</a> </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Секрет"
+                     [(ngModel)]="inputRec.eSecret"> </div>
+          </div>
+        </div>
+      </div>
+
+
+      <button class="btn mt-3 btn-primary btn-block confirm-button">ОК</button>
     </div>
   </div>
 </div>

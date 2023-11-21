@@ -7,12 +7,12 @@
 
 
     <div class="col-3">
-      <app-records [inputSafe]="safeToSend"></app-records>
+      <app-records (recSelected)="onRecSelectedInChild($event)"  [inputSafe]="safeToSend"></app-records>
     </div>
 
 
-    <div class="col rounded-4 shadow-lg bg-white">
-      <app-record-info></app-record-info>
+    <div class="col-5 rounded-4 shadow-lg bg-white">
+      <app-record-info [inputRec]="recordToSend"></app-record-info>
     </div>
 
   </div>

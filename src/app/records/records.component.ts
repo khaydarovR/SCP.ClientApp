@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
@@ -8,6 +8,7 @@ import {RecordService} from "../services/record.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
 import {Router} from "@angular/router";
+import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 
 @Component({
   selector: 'app-records',
@@ -17,9 +18,11 @@ import {Router} from "@angular/router";
   styleUrl: './records.component.css'
 })
 export class RecordsComponent implements OnInit{
+  @Output() recSelected = new EventEmitter<IGetRecordResponse>();
+
   records!: IGetRecordResponse[]
   private _inputSafe?: IGetLinkedSafeResponse
-  private _selectedRecordId?: string
+  private selectedRecord!: IGetRecordResponse
 
   constructor(private recordService: RecordService, private router: Router) {
   }
@@ -56,13 +59,8 @@ export class RecordsComponent implements OnInit{
     }
   }
 
-  onSelectRecord(recId: string) {
-    this._selectedRecordId = recId
-    this.recordService.readRecord(this._selectedRecordId).then(r =>{
-      console.log(r.title)
-      console.log(r.eLogin)
-      console.log(r.ePw)
-      console.log(r.eSecret)
-    })
+  onSelectRecord(recFromList: IGetRecordResponse) {
+    this.selectedRecord = recFromList
+    this.recSelected.emit(this.selectedRecord);
   }
 }

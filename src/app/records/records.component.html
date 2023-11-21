@@ -16,7 +16,7 @@
     <div class="card-body">
 
       <div *ngFor="let record of records">
-        <app-record-item [record]="record" (click)="onSelectRecord(record.id)"></app-record-item>
+        <app-record-item [record]="record" (click)="onSelectRecord(record)"></app-record-item>
       </div>
 
     </div>

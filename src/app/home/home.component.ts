@@ -12,6 +12,9 @@ import {SafesComponent} from "../safes/safes.component";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {RecordsComponent} from "../records/records.component";
 import {RecordInfoComponent} from "../record-info/record-info.component";
+import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
+import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
+import {RecordService} from "../services/record.service";
 
 @Component({
   selector: 'app-home',
@@ -22,15 +25,26 @@ import {RecordInfoComponent} from "../record-info/record-info.component";
 })
 export class HomeComponent {
 
-  constructor(private safeService: SafeService,
+  constructor(private recordService: RecordService,
               private notify: PageNotifyService,
               public dialog: MatDialog) {
   }
 
 
   public safeToSend?: IGetLinkedSafeResponse
+  public recordToSend!: IReadRecordResponse
   onSafeSelectedInChild(safe: IGetLinkedSafeResponse) {
     this.safeToSend = safe
+  }
+
+  onRecSelectedInChild(safe: IGetRecordResponse) {
+    this.recordService.readRecord(safe.id).then(r =>{
+      console.log(r.title)
+      console.log(r.eLogin)
+      console.log(r.ePw)
+      console.log(r.eSecret)
+      this.recordToSend = r
+    })
   }
 
 

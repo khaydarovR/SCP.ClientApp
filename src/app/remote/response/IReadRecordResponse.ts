@@ -1,4 +1,5 @@
 export interface IReadRecordResponse {
+  id: string;
   title: string;
   eSecret: string;
   eLogin: string;
