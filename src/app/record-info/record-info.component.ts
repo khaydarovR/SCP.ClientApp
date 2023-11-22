@@ -8,7 +8,6 @@ import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {MatChipsModule} from "@angular/material/chips";
 import {PageNotifyService} from "../services/page-notify.service";
 import {RecordService} from "../services/record.service";
-import {IPatchRecordDTO} from "../remote/dto/IPatchRecordDTO";
 
 @Component({
   selector: 'app-record-info',

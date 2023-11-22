@@ -65,8 +65,7 @@ export class RecordService {
   private hashAndSign(encryptedData: any) {
     const {loginEncrypted, pwEncrypted, secretEncrypted} = encryptedData;
     const rawData = loginEncrypted + pwEncrypted + secretEncrypted;
-    const hashedData = this.cryptoService.hash(rawData);
-    let hashFromSumEncryptedData = hashedData;
+    let hashFromSumEncryptedData = this.cryptoService.hash(rawData);
     console.log('hashFromSumEncryptedData ' + hashFromSumEncryptedData)
     const signature = this.cryptoService.encrypt(hashFromSumEncryptedData, this.cryptoService.getPubKFromClient());
     return { signature };
