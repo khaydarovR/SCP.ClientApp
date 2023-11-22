@@ -8,12 +8,14 @@ import {EcnryptorService} from "./ecnryptor.service";
 import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IReadRecordDTO} from "../remote/dto/IReadRecordDTO";
 import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
+import {IPatchRecordDTO} from "../remote/dto/IPatchRecordDTO";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService {
-  private readonly endpoint = 'api/Record/Create';
+  private readonly endpointToCreate = 'api/Record/Create';
+  private readonly endpointToUpdate = 'api/Record/Patch';
 
   constructor(private http: HttpClient, private cryptoService: RsaCryptoService,
               private encryptorForServer: EcnryptorService) {}
@@ -90,7 +92,7 @@ export class RecordService {
 // Send post data function
   private async postRecordData(recordData: ICreateRecordDTO) {
     try {
-      const response = await this.http.post<boolean|string[]>(BASE_URL + this.endpoint, recordData, { observe: 'response' }).toPromise();
+      const response = await this.http.post<boolean|string[]>(BASE_URL + this.endpointToCreate, recordData, { observe: 'response' }).toPromise();
       console.log(response);
 
       // Check status code - return boolean or errors list
@@ -119,8 +121,7 @@ export class RecordService {
 
 
   private getPublicKeyFromSafe(safeId: string): Observable<string> {
-    let res = this.getPublicKeyForSafe(safeId);
-    return res
+    return this.getPublicKeyForSafe(safeId)
   }
 
   private getPublicKeyForSafe(safeId: string): Observable<string> {
@@ -165,5 +166,57 @@ export class RecordService {
 
   private sendRequestForGetAllRecords(safeId: string){
     return this.http.get<IGetRecordResponse[]>(`${BASE_URL}api/Record/GetAll?safeId=${safeId}`);
+  }
+
+
+  //Request for edit record
+
+  public async updateRecord(rec: IReadRecordResponse, safeId: string){
+    const publicKeyFromSafe = await this.getPublicKey(safeId);
+
+    // Encrypt all secrets
+    const encryptedData = this.encryptData(rec.eLogin, rec.ePw, rec.eSecret, publicKeyFromSafe);
+    let eData : IPatchRecordDTO = {
+      title: rec.title,
+      id: rec.id,
+      login: encryptedData!.loginEncrypted,
+      pw: encryptedData!.pwEncrypted,
+      secret: encryptedData!.secretEncrypted,
+      isDeleted: rec.isDeleted,
+      forResource: rec.forResource,
+      signature: "",
+      //для проверки подписи
+      clientPrivK: this.cryptoService.getPrivKFromClient()
+    }
+    return this.patchRecord(eData)
+  }
+  private async patchRecord(recordData: IPatchRecordDTO) {
+    try {
+      const response = await this.http
+        .patch<boolean|string[]>(BASE_URL + this.endpointToUpdate, recordData, { observe: 'response' }).toPromise();
+      console.log(response);
+
+      // Check status code - return boolean or errors list
+      if (response!.status === 200) {
+        return response!.body as boolean;
+      } else {
+        // As per docs, body should contain the array of error strings on non-200 status.
+        return response!.body as string[];
+      }
+    } catch (e) {
+      if (e instanceof HttpErrorResponse) {
+        console.error(e);
+        if (e.error != null && Array.isArray(e.error)) {
+          // We're expecting the errors to be in the HttpErrorResponse's `error` field,
+          // when the response couldn't be delivered successfully at all
+          return e.error as string[];
+        } else {
+          return [`Unexpected error: ${e.message}`];
+        }
+      } else {
+        console.error(e);
+        return [`Unexpected error: ${e}`];
+      }
+    }
   }
 }

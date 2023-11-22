@@ -1,9 +1,9 @@
-<div class="card my-2 border-0 rounded-4" style="background-color: #fcec52; cursor: pointer">
+<div class="card my-2 border-0 rounded-4" style="background-color: #ffffff; cursor: pointer">
   <div class="card-body">
-    <h2 class="card-title rounded-4 p-2" style="color: black; font-size: x-large; max-width: 200px">
+    <h2 class="card-title rounded-4" style="color: black; font-size: x-large; max-width: 200px">
       {{record?.title}}</h2>
-    <h3 class="card-text" style="color: grey">{{record?.forResource}}</h3>
-    <span>{{record.userRight}}</span>
+    <h3 class="card-text my-0" style="color: grey">{{record?.forResource}}</h3>
+    <h3 class="card-text my-0" style="color: black" >Доступно: {{record.rightToCurentUser}}</h3>
   </div>
 </div>
 

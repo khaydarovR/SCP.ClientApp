@@ -3,70 +3,53 @@
     <div class="card-body">
       <div class="d-flex justify-content-between m-0 p-0">
         <div>
-          <mat-slide-toggle color="primary" checked="false" [(ngModel)]="isChecked2">Открыть</mat-slide-toggle>
-          <mat-slide-toggle color="primary" checked="false" [(ngModel)]="isChecked">Редактирование: {{isChecked}}</mat-slide-toggle>
+          <button (click)="showSecrets(!isShow)" mat-mini-fab color="{{isShow?'warn':'white'}}">
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <button (click)="onEditMode(!editMod)" class="mx-4" mat-mini-fab color="{{editMod?'warn':'white'}}">
+            <mat-icon>edit</mat-icon>
+          </button>
         </div>
 
-        <button mat-icon-button>
-          <mat-icon>more_vert</mat-icon>
+        <button (click)="onDelete(!deleteMod)" mat-mini-fab color="{{deleteMod?'warn':'white'}}">
+          <mat-icon>delete</mat-icon>
         </button>
+
       </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <input class="form-control" disabled type="text" [(ngModel)]="inputRec.id" placeholder="ID"
-            ></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <input class="form-control" type="text" placeholder="Название"
-                   [(ngModel)]="inputRec.title" > </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Для ресурса"
-                     [(ngModel)]="inputRec.forResource"> </div>
-          </div>
-        </div>
+      <div class="form-group">
+        <input [(ngModel)]="inputRec.id" disabled class="form-control"  placeholder="ID" />
       </div>
 
+      <div class="form-group">
+        <input [(ngModel)]="inputRec.title" type="text" class="form-control" [disabled]="!editMod" placeholder="Название" />
+        <small class="form-text text-muted">Название</small>
+      </div>
 
-      <div class="row mt-4">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Логин"
-                     [(ngModel)]="inputRec.eLogin"> </div>
-          </div>
-        </div>
+      <div class="form-group">
+        <input [(ngModel)]="inputRec.forResource" type="text" class="form-control" [disabled]="!editMod" placeholder="Ресурс" />
+        <small class="form-text text-muted">Ресурс</small>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Пароль"
-                     [(ngModel)]="inputRec.ePw"  > </div>
-          </div>
-        </div>
+
+      <div class="form-group mt-5">
+        <input [(ngModel)]="inputRec.eLogin" type="text" class="form-control" [disabled]="!editMod" placeholder="Логин" />
+        <small class="form-text text-muted">Логин</small>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Секрет"
-                     [(ngModel)]="inputRec.eSecret"> </div>
-          </div>
-        </div>
+
+      <div class="form-group">
+        <input [(ngModel)]="inputRec.ePw" type="text" class="form-control" [disabled]="!editMod" placeholder="Пароль" />
+        <small class="form-text text-muted">Пароль</small>
+      </div>
+
+      <div class="form-group">
+        <textarea rows="4" style="height: 100px" [(ngModel)]="inputRec.eSecret" class="form-control" [disabled]="!editMod" placeholder="Cекрет">
+        </textarea>
+        <small class="form-text text-muted">Cекрет</small>
       </div>
 
 
-      <button class="btn mt-3 btn-primary btn-block confirm-button">ОК</button>
+      <button (click)="onSubmitEdit()" class="btn mt-3 btn-warning btn-block confirm-button shadow-lg"> ОК </button>
     </div>
   </div>
 </div>
