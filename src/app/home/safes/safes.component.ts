@@ -2,12 +2,12 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {SafeItemComponent} from "../safe-item/safe-item.component";
-import {SafeService} from "../services/safe.service";
-import {PageNotifyService} from "../services/page-notify.service";
-import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
-import {MSafeCreateComponent} from "../m-safe-create/m-safe-create.component";
-import {ICreateSafeDTO} from "../remote/dto/ICreateSafeDTO";
+import {SafeItemComponent} from "../../safe-item/safe-item.component";
+import {SafeService} from "../../services/safe.service";
+import {PageNotifyService} from "../../services/page-notify.service";
+import {IGetLinkedSafeResponse} from "../../remote/response/IGetLinkedSafeResponse";
+import {MSafeCreateComponent} from "../../m-safe-create/m-safe-create.component";
+import {ICreateSafeDTO} from "../../remote/dto/ICreateSafeDTO";
 import {MatDialog} from "@angular/material/dialog";
 import {sample} from "rxjs";
 
@@ -29,8 +29,11 @@ export class SafesComponent implements OnInit{
     title: '',
     dsc: ''
   }
+  public isHome = false ;
   constructor(private dialog: MatDialog, private safeService: SafeService, private notify: PageNotifyService) {
   }
+
+
   addSafe(){
     this.openDialog()
   }
@@ -96,6 +99,8 @@ export class SafesComponent implements OnInit{
         console.error('There was an error!', error);
       }
     })
+
+    this.isHome = location.pathname.includes("home")
   }
 
   protected readonly sample = sample;

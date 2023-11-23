@@ -9,10 +9,13 @@
         <mat-divider></mat-divider>
 
         <div class="d-grid gap-2 mt-5">
-          <button *ngIf="!isAuth" class="btn btn-lg btn-warning" type="button" routerLink="login">Вход</button>
-          <button *ngIf="!isAuth" class="btn btn-lg btn-warning" type="button" routerLink="register">Регистрация</button>
-          <button class="btn btn-lg btn-warning" type="button" routerLink="home">Главная</button>
-          <button  class="btn btn-lg btn-danger" type="button" (click)="onLogout()">Выход</button>
+          <button *ngIf="!isAuth" mat-raised-button routerLink="login">Вход</button>
+          <button *ngIf="!isAuth" mat-raised-button routerLink="register">Регистрация</button>
+          <button *ngIf="isAuth" mat-raised-button routerLink="home">Главная</button>
+          <button *ngIf="isAuth" mat-raised-button routerLink="dashboard">Разрешения</button>
+
+          <br>
+          <button *ngIf="isAuth" mat-raised-button (click)="onLogout()">Выход</button>
         </div>
 
 

@@ -2,13 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {SafeItemComponent} from "../safe-item/safe-item.component";
-import {RecordItemComponent} from "../record-item/record-item.component";
-import {RecordService} from "../services/record.service";
-import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
-import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
+import {SafeItemComponent} from "../../safe-item/safe-item.component";
+import {RecordItemComponent} from "../../record-item/record-item.component";
+import {RecordService} from "../../services/record.service";
+import {IGetLinkedSafeResponse} from "../../remote/response/IGetLinkedSafeResponse";
+import {IGetRecordResponse} from "../../remote/response/GetRecordResponseю";
 import {Router} from "@angular/router";
-import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
+import {IReadRecordResponse} from "../../remote/response/IReadRecordResponse";
 
 @Component({
   selector: 'app-records',

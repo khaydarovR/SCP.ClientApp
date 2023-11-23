@@ -4,10 +4,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
-import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
+import {IReadRecordResponse} from "../../remote/response/IReadRecordResponse";
 import {MatChipsModule} from "@angular/material/chips";
-import {PageNotifyService} from "../services/page-notify.service";
-import {RecordService} from "../services/record.service";
+import {PageNotifyService} from "../../services/page-notify.service";
+import {RecordService} from "../../services/record.service";
 
 @Component({
   selector: 'app-record-info',

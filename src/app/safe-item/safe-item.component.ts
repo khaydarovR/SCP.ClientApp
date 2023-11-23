@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RecordService} from "../services/record.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
@@ -11,13 +11,17 @@ import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse"
   templateUrl: './safe-item.component.html',
   styleUrl: './safe-item.component.css'
 })
-export class SafeItemComponent{
+export class SafeItemComponent implements OnInit{
 
 
   @Input() safe!: IGetLinkedSafeResponse;
   @Input() selectedSafeId!: string;
-
+  isHome = false
   constructor(private recordService: RecordService) {
   }
+
+  ngOnInit(): void {
+  }
+
 
 }
