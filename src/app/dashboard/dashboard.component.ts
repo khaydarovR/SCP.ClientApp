@@ -14,13 +14,14 @@ import {MatIconModule} from "@angular/material/icon";
 import {SafeService} from "../services/safe.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {Observable} from "rxjs";
+import {UserSelectorComponent} from "../user-selector/user-selector.component";
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule, UserSelectorComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

@@ -1,1 +1,30 @@
-<p>user-selector works!</p>
+<div>
+  <div class="col shadow-lg bg-dark rounded-4 p-3 m-3">
+
+    <h2 class="text-white m-2">Выбирите пользователей</h2>
+    <form>
+      <mat-form-field class="example-chip-list" >
+        <mat-chip-grid #chipGrid >
+          @for (u of users; track u) {
+            <mat-chip-row (removed)="remove(u)">
+            {{u.email}} {{u.userName}}
+            <button matChipRemove [attr.aria-label]="'удалить ' + u">
+              <mat-icon>cancel</mat-icon>
+            </button>
+            </mat-chip-row>
+          }
+
+        </mat-chip-grid>
+        <input placeholder="Email пользователя" #fruitInput [formControl]="fruitCtrl"
+               [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               (matChipInputTokenEnd)="add($event)"/>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          @for (u of filteredUsers | async; track u) {
+          <mat-option [value]="u">{{u.email}}: {{u.userName}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
