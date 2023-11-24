@@ -1,22 +1,59 @@
 <div class="db">
 
-  <div class="p-3">
+  <div class="p-4">
 
     <div class="row">
 
-      <div class="col">
+      <div class="col-6 ">
+      <div class="rounded-4 shadow-lg my-3 p-2" style="background-color: #fcec52">
+        <div class="d-flex justify-content-between m-0 p-0">
+          <div>
+            <button mat-mini-fab color="white">
+              <mat-icon>visibility</mat-icon>
+            </button>
 
+            <button class="mx-4" mat-mini-fab color="white">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
+          <div>
+            <button mat-mini-fab color="white">
+              <mat-icon>visibility</mat-icon>
+            </button>
+
+            <button class="mx-4" mat-mini-fab color="white">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab color="white">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+        </div>
       </div>
+    </div>
 
-      <div class="col">
+      <div class="col-6 ">
+        <div class="rounded-4 shadow-lg my-3 p-2" style="background-color: #fcec52">
+          <div class="d-flex justify-content-between m-0 p-0">
+            <div>
+              <input [(ngModel)]="dayLife" class="form-control" placeholder="Срок разрешения (дн.)">
+            </div>
 
+            <div>
+                <button class="rounded-3" mat-raised-button color="white" (click)="openDialog()">ПОДТВЕРДИТЬ</button>
+            </div>
+
+          </div>
+        </div>
       </div>
 
     </div>
     <div class="row">
 
 
-      <div class="col-3 shadow-lg bg-dark p-3 m-1">
+      <div class="col-3 shadow-lg rounded-4 bg-dark p-3 m-1">
 
         <h2 class="text-white m-2">Выбирите сейфы</h2>
         <form>

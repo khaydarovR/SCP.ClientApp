@@ -1,7 +1,7 @@
 
 import {Component, ElementRef, inject, OnInit, PipeTransform, ViewChild} from '@angular/core';
 import {AsyncPipe, CommonModule, DecimalPipe} from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { map, startWith } from 'rxjs/operators';
 import {SafesComponent} from "../home/safes/safes.component";
@@ -18,13 +18,19 @@ import {UserSelectorComponent} from "../user-selector/user-selector.component";
 import {IGetUserResponse} from "../remote/response/IGetUserResponse";
 import {PermisionSelectorComponent} from "../permision-selector/permision-selector.component";
 import {Permision} from "../services/permision.service";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmerComponent} from "../confirmer/confirmer.component";
+import {SafeAccessService} from "../services/safe-access.service";
+import {IInviteRequestDTO} from "../remote/dto/IInviteRequestDTO";
+import {PageNotifyService} from "../services/page-notify.service";
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule, UserSelectorComponent, PermisionSelectorComponent],
+  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule, UserSelectorComponent, PermisionSelectorComponent, MatButtonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -40,6 +46,7 @@ export class DashboardComponent implements OnInit{
 
   receiveSelectedUsers(data: IGetUserResponse[]) {
     this.selectedUsers = data;
+    console.log(this.selectedUsers)
   }
   receiveSelectedPermissions(data: Permision[]) {
     this.selectedPermissions = data;
@@ -49,21 +56,17 @@ export class DashboardComponent implements OnInit{
 
   announcer = inject(LiveAnnouncer);
 
-  constructor(private safeService: SafeService) {
+  constructor(private safeService: SafeService,
+              public dialog: MatDialog,
+              private safeAccessService: SafeAccessService,
+              private notify: PageNotifyService) {
     this.filteredSafes = this.fruitCtrl.valueChanges.pipe(
       startWith<string | null>(''), // Используйте тип string | null
       map((value: string | null) => (value ? this._filter(value) : this.allSafes.slice())),
     );
   }
-
-  add(event: MatChipInputEvent): void {
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
-  }
-
+  //usage!!!
+  dayLife: number = 30;
   remove(fruit: IGetLinkedSafeResponse): void {
     const index = this.safes.indexOf(fruit);
 
@@ -73,6 +76,14 @@ export class DashboardComponent implements OnInit{
       this.announcer.announce(`Removed ${fruit}`);
     }
   }
+  add(event: MatChipInputEvent): void {
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.fruitCtrl.setValue(null);
+  }
+
 
   selected(event: MatAutocompleteSelectedEvent): void {
 
@@ -96,6 +107,36 @@ export class DashboardComponent implements OnInit{
       next: res => {
         this.allSafes = res as IGetLinkedSafeResponse[]
 
+      }
+    })
+  }
+
+  openDialog(): void {
+    let ref = this.dialog.open(ConfirmerComponent, {
+      width: '250px',
+    });
+
+    ref.afterClosed().subscribe(result => {
+      if (result === true){
+        this.sendRequestToInvite()
+      }
+    });
+  }
+
+  private sendRequestToInvite() {
+    this.safeAccessService.sendInviteRequest({
+      dayLife: this.dayLife,
+      safeIds: this.safes.map(s => s.id),
+      userIds: this.selectedUsers.map(u => u.id),
+      permisions: this.selectedPermissions.map(p => p.slug),
+      userEmails: this.selectedUsers.map(u => u.email),
+    } as IInviteRequestDTO).subscribe( {
+      next: r => {
+        if(Array.isArray(r)){
+          this.notify.pushMany(r)
+        }else {
+          this.notify.push(r)
+        }
       }
     })
   }

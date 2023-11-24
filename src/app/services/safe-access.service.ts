@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {PageNotifyService} from "./page-notify.service";
 import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IPatchRecordDTO} from "../remote/dto/IPatchRecordDTO";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {BASE_URL} from "../data/myConst";
-import {catchError, of, tap} from "rxjs";
+import {catchError, map, Observable, of, tap, throwError} from "rxjs";
 import {IGetUserResponse} from "../remote/response/IGetUserResponse";
+import {IInviteRequestDTO} from "../remote/dto/IInviteRequestDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,21 @@ export class SafeAccessService {
   public GetLinkedUsers(){
 
     return this.client.get<Array<IGetUserResponse>>(BASE_URL + 'api/SafeAccess/GetLinkedUsers')
+  }
+
+  public sendInviteRequest(request: IInviteRequestDTO): Observable<string | string[]> {
+    const url = BASE_URL + 'api/SafeAccess/InviteRequest';
+
+    return this.client.post(url, request, { observe: 'response' })
+      .pipe(
+        map(response => {
+          let res = response.body
+          return res as string;
+        }),
+        catchError(error => {
+          return throwError(() => error.error instanceof Array ? error.error : ['An error occurred']);
+        })
+      );
   }
 
 }
