@@ -15,13 +15,16 @@ import {SafeService} from "../services/safe.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {Observable} from "rxjs";
 import {UserSelectorComponent} from "../user-selector/user-selector.component";
+import {IGetUserResponse} from "../remote/response/IGetUserResponse";
+import {PermisionSelectorComponent} from "../permision-selector/permision-selector.component";
+import {Permision} from "../services/permision.service";
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule, UserSelectorComponent],
+  imports: [CommonModule, ReactiveFormsModule, SafesComponent, MatInputModule, MatChipsModule, MatAutocompleteModule, MatIconModule, UserSelectorComponent, PermisionSelectorComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -31,6 +34,16 @@ export class DashboardComponent implements OnInit{
   filteredSafes: Observable<IGetLinkedSafeResponse[]>;
   safes: IGetLinkedSafeResponse[] = [];
   allSafes: IGetLinkedSafeResponse[] = [];
+
+  selectedUsers: IGetUserResponse[] = [];
+  selectedPermissions: Permision[] = [];
+
+  receiveSelectedUsers(data: IGetUserResponse[]) {
+    this.selectedUsers = data;
+  }
+  receiveSelectedPermissions(data: Permision[]) {
+    this.selectedPermissions = data;
+  }
 
   @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
 

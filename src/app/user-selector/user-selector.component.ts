@@ -42,7 +42,6 @@ export class UserSelectorComponent implements OnInit {
   sendOutputUsers() {
     this.outputUsers = structuredClone(this.users)
     this.sendSelectedUsersEvent.emit(this.outputUsers);
-    console.log(this.users)
   }
 
 

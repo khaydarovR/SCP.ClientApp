@@ -1,9 +1,9 @@
 <div>
-  <div class="col shadow-lg bg-dark rounded-4 p-3 m-3">
+  <div class="col shadow-lg bg-dark p-3 m-1">
 
     <h2 class="text-white m-2">Выбирите пользователей</h2>
     <form>
-      <mat-form-field class="example-chip-list" >
+      <mat-form-field class="example-chip-list" style="width: 100%">
         <mat-chip-grid #chipGrid >
           @for (u of users; track u) {
             <mat-chip-row (removed)="remove(u)">

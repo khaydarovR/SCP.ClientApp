@@ -1,0 +1,23 @@
+<div class="col shadow-lg bg-white p-2 m-1 mx-0">
+
+  <h3>Выбор разрешений для сейфа</h3>
+
+
+  <div style="height: 250px">
+    <mat-chip class="m-1" *ngFor="let p of _permisions" (click)="addToSelectedList(p)">
+      {{p.name}}
+    </mat-chip>
+  </div>
+
+  <mat-divider class="my-3"></mat-divider>
+
+  <h3>Выбранные</h3>
+  <div>
+    <mat-chip class="m-1 bg-warning" *ngFor="let p of selectedPermisions" (click)="removeFromSelectedList(p)">
+      {{p.name}}
+    </mat-chip>
+  </div>
+
+
+</div>
+

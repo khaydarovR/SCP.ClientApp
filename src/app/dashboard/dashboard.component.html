@@ -1,6 +1,6 @@
 <div class="db">
 
-  <div class="container p-3">
+  <div class="p-3">
 
     <div class="row">
 
@@ -16,7 +16,7 @@
     <div class="row">
 
 
-      <div class="col shadow-lg bg-dark rounded-4 p-3 m-3">
+      <div class="col-3 shadow-lg bg-dark p-3 m-1">
 
         <h2 class="text-white m-2">Выбирите сейфы</h2>
         <form>
@@ -45,13 +45,13 @@
       </div>
 
 
-      <div class="col">
-        <app-user-selector></app-user-selector>
+      <div class="col-3">
+        <app-user-selector (sendSelectedUsersEvent)="receiveSelectedUsers($event)" ></app-user-selector>
       </div>
 
 
-      <div class="col">
-
+      <div class="col px-0 mx-0">
+        <app-permision-selector (sendSelectedPerEvent)="receiveSelectedPermissions($event)"></app-permision-selector>
       </div>
 
 
