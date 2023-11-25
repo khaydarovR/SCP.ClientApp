@@ -14,6 +14,12 @@ export class PermisionService {
   public GetAllPermisions(){
     return this.client.get<Array<Permision>>(BASE_URL + 'api/SafeAccess/Permisions')
   }
+
+  public getPerForUser(sId: string, uId: string){
+    return this.client.get<Array<Permision>>(BASE_URL + 'api/SafeAccess/GetPer', {
+      params: {sId, uId}
+    })
+  }
 }
 
 export class Permision {

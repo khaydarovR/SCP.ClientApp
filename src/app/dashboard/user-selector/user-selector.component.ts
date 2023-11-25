@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {IGetUserResponse} from "../remote/response/IGetUserResponse";
-import {SafeAccessService} from "../services/safe-access.service";
+import {IGetUserResponse} from "../../remote/response/IGetUserResponse";
+import {SafeAccessService} from "../../services/safe-access.service";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";

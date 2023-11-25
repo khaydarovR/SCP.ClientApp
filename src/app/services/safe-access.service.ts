@@ -17,7 +17,6 @@ export class SafeAccessService {
   constructor(private client: HttpClient, private notify: PageNotifyService) { }
 
   public GetLinkedUsers(){
-
     return this.client.get<Array<IGetUserResponse>>(BASE_URL + 'api/SafeAccess/GetLinkedUsers')
   }
 

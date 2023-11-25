@@ -1,8 +1,14 @@
 <div class="p-1 mb-2 rounded-4" style="background-color: #FCEC52; cursor: pointer"
      [ngClass]="safe.id == selectedSafeId ? 'shadow-lg border border-5 border-black': ''">
   <div class="card-body">
-    <h2 class="card-title rounded-4 p-2" style="color: black; font-size: x-large; max-width: 200px">
-      {{safe?.title}}</h2>
+    <div class="navbar justify-content-between align-items-center">
+      <h2 class="rounded-4 p-1" style="color: black; font-size: x-large;">
+        {{safe?.title}}</h2>
+
+      <button (click)="onClickSettings(safe.id)" mat-mini-fab color="white" >
+        <mat-icon fontIcon="settings"></mat-icon>
+      </button>
+    </div>
     <h3 class="card-text" style="color: grey">{{safe?.description}}</h3>
   </div>
 </div>

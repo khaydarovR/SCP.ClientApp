@@ -1,13 +1,13 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Permision, PermisionService} from "../services/permision.service";
+import {Permision, PermisionService} from "../../services/permision.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {CdkDragDrop, CdkDropList, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatListModule} from "@angular/material/list";
-import {IGetUserResponse} from "../remote/response/IGetUserResponse";
+import {IGetUserResponse} from "../../remote/response/IGetUserResponse";
 
 @Component({
   selector: 'app-permision-selector',
@@ -17,6 +17,7 @@ import {IGetUserResponse} from "../remote/response/IGetUserResponse";
   styleUrl: './permision-selector.component.css'
 })
 export class PermisionSelectorComponent implements OnInit{
+  @Input() bgColor = 'white'
 
   @Output() sendSelectedPerEvent = new EventEmitter<Permision[]>();
 
@@ -31,9 +32,18 @@ export class PermisionSelectorComponent implements OnInit{
     this.perSer.GetAllPermisions().subscribe({
       next: r =>{
           this._permisions = r
-          console.log(this._permisions)
         }
     })
+  }
+
+  updateData(data: Permision[]) {
+    this._permisions.push(...this.selectedPermisions)
+    this.selectedPermisions = []
+
+    for (const p of data) {
+      let finded = this._permisions.find(_p => _p.slug==p.slug)!
+      this.addToSelectedList(finded)
+    }
   }
 
   addToSelectedList(p: Permision) {

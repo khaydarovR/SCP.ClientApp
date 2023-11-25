@@ -1,0 +1,116 @@
+<div class="db">
+
+  <div class="p-4 container">
+
+    <div class="row">
+
+      <div class="col-2 " style="min-width: 10rem">
+        <div class="rounded-4 shadow-lg my-3 p-2 d-flex align-items-center" style="background-color: #4f4789">
+          <input [(ngModel)]="searchUserText" class="form-control bg-dark text-white flex-grow-1">
+        </div>
+      </div>
+
+      <div class="col ">
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+          <div class="col">
+            <div class="card rounded-4 stat">
+              <div class="card-body">
+                <h2 class="card-title">Card title</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card rounded-4 stat">
+              <div class="card-body">
+                <h2 class="card-title">Card title</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card rounded-4 lt w-75">
+              <div class="card-body">
+                <mat-select class="text-white" [(value)]="selectedSafeId">
+                  @for (s of _safes; track s) {
+                  <mat-option [value]="s.id">{{s.title}}</mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    <div class="row">
+
+      <div class="col-2" style="min-width: 10rem">
+        <div *ngFor="let u of filteredUsers" class="shadow-lg rounded-4 my-2" style="cursor: pointer">
+          <div (click)="onSelectUser(u.id)" class=" lt card rounded-4 border-2 border-white">
+            <div class="card-body" [ngStyle]="_selectedUser?.id == u.id ? {'color': '#FCEC52FF'} : {'color':'white'}">
+              <h2 class="card-title py-0 my-0">{{u.userName}} </h2>
+              <h3 class="card-text text-end" >{{u.email}}</h3>
+            </div>
+          </div>
+        </div>
+
+        <button class="align-self-center w-100" mat-raised-button>Добавить в сейф</button>
+      </div>
+
+
+      <div class="col main">
+
+        <div class="row">
+
+          <div class="col-3">
+            <div class="card rounded-4 my-4 m-2 lt" >
+              <div class="">
+                <div class="d-flex justify-content-between m-0 p-0">
+                  <div class="">
+                    <button class="m-2" mat-mini-fab color="white">
+                      <mat-icon>done_outline</mat-icon>
+                    </button>
+
+                  </div>
+
+                  <div>
+                    <button class="m-2" mat-mini-fab color="white">
+                      <mat-icon>keyboard_double_arrow_up</mat-icon>
+                    </button>
+                    <button class="m-2" mat-mini-fab color="white">
+                      <mat-icon>keyboard_double_arrow_down</mat-icon>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card rounded-4 my-4 mx-2 stat" >
+              <div class="card-body">
+                <h6 class="card-title rounded-4 px-2" style="background-color: #4F4789FF">{{_selectedUser?.id}}</h6>
+                <h1 class="card-title">{{_selectedUser?.userName}}</h1>
+                <h2 class="card-title">{{_selectedUser?.email}}</h2>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="">
+              <app-permision-selector #permisionSelector bgColor="#201335"></app-permision-selector>
+            </div>
+          </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+</div>

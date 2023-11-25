@@ -1,0 +1,26 @@
+.db{
+  background-color: #201335;
+  height: 100%;
+}
+
+.lt{
+  background-color: #4f4789;
+}
+
+.stat{
+  background-color: #201335;
+  border: 2px solid #fcec52;
+  color: white;
+}
+
+.selu{
+  background-color: #4f4789;
+}
+
+.main{
+  margin: 1rem;
+  border-radius: 1rem;
+  background-color: #201335;
+  border: 2px solid #4f4789;
+  color: white;
+}

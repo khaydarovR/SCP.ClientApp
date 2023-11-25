@@ -8,6 +8,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {CreateRecordComponent} from "./create-record/create-record.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {UserManagerComponent} from "./user-manager/user-manager.component";
 
 export const routes: Routes = [
   {
@@ -29,6 +30,10 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+  },
+  {
+    path: 'u-m/:id',
+    component: UserManagerComponent,
   },
   {
     path: '',

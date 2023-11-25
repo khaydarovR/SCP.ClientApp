@@ -14,9 +14,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {SafeService} from "../services/safe.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {Observable} from "rxjs";
-import {UserSelectorComponent} from "../user-selector/user-selector.component";
+import {UserSelectorComponent} from "./user-selector/user-selector.component";
 import {IGetUserResponse} from "../remote/response/IGetUserResponse";
-import {PermisionSelectorComponent} from "../permision-selector/permision-selector.component";
+import {PermisionSelectorComponent} from "./permision-selector/permision-selector.component";
 import {Permision} from "../services/permision.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
@@ -132,7 +132,7 @@ export class DashboardComponent implements OnInit{
       userEmails: this.selectedUsers.map(u => u.email),
     } as IInviteRequestDTO).subscribe( {
       next: r => {
-        this.notify.push(r)
+        this.notify.push('Разрешения успешно обновлены')
       },
       error: err => {this.notify.pushMany(err.error)}
     })
