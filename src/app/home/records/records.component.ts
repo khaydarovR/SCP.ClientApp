@@ -9,6 +9,7 @@ import {IGetLinkedSafeResponse} from "../../remote/response/IGetLinkedSafeRespon
 import {IGetRecordResponse} from "../../remote/response/GetRecordResponseю";
 import {Router} from "@angular/router";
 import {IReadRecordResponse} from "../../remote/response/IReadRecordResponse";
+import {PageNotifyService} from "../../services/page-notify.service";
 
 @Component({
   selector: 'app-records',
@@ -24,7 +25,7 @@ export class RecordsComponent implements OnInit{
   private _inputSafe?: IGetLinkedSafeResponse
   private selectedRecord!: IGetRecordResponse
 
-  constructor(private recordService: RecordService, private router: Router) {
+  constructor(private recordService: RecordService, private router: Router, private notify: PageNotifyService) {
   }
 
   @Input()
@@ -47,8 +48,10 @@ export class RecordsComponent implements OnInit{
     if (this._inputSafe?.id != undefined){
       console.log('request to get all from ' + this._inputSafe.id)
       this.recordService.getAllRecords(this._inputSafe!.id).subscribe({
-        next: value => this.records = value,
-        error: e => console.log(e)
+        next: value => {
+          this.records = value as IGetRecordResponse[]
+        },
+        error: e => this.notify.pushMany(e.error)
       })
     }
   }

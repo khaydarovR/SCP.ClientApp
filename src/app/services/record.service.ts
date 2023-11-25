@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {firstValueFrom, Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {catchError, firstValueFrom, map, Observable, ObservableInput, throwError} from 'rxjs';
 import {RsaCryptoService} from "./rsa-crypto.service";
 import {ICreateRecordDTO} from "../remote/dto/ICreateRecordDTO";
 import {BASE_URL} from "../data/myConst";
@@ -129,24 +129,17 @@ export class RecordService {
 
 
   //Methods for get and read record
-  public async readRecord(recId: string): Promise<IReadRecordResponse> {
+  public readRecord(recId: string): Observable<IReadRecordResponse> {
     let pubK = this.cryptoService.getPubKFromClient();
 
-    // Wrap the data source in a Promise
-    return new Promise<IReadRecordResponse>((resolve, reject) => {
-      this.getEncryptedRecord(recId, pubK).subscribe(
-        {
-          next: response => {
-            response.eLogin = this.cryptoService.decrypt(response.eLogin);
-            response.ePw = this.cryptoService.decrypt(response.ePw);
-            response.eSecret = this.cryptoService.decrypt(response.eSecret);
-
-            resolve(response as IReadRecordResponse); // Resolve the Promise
-          },
-          error: error => reject(error) // Reject on error
-        }
-      );
-    });
+    return this.getEncryptedRecord(recId, pubK).pipe(
+      map(response => {
+        response.eLogin = this.cryptoService.decrypt(response.eLogin);
+        response.ePw = this.cryptoService.decrypt(response.ePw);
+        response.eSecret = this.cryptoService.decrypt(response.eSecret);
+        return response as IReadRecordResponse;
+      })
+    );
   }
 
   private getEncryptedRecord(recId: string, pubKey: string): Observable<IReadRecordResponse> {
@@ -155,7 +148,7 @@ export class RecordService {
       recId: recId
     }
 
-    return this.http.post<IReadRecordResponse>(`${BASE_URL}api/Record/Read`, data);
+    return this.http.post<IReadRecordResponse>(`${BASE_URL}api/Record/Read`, data)
   }
 
   getAllRecords(safeId: string):Observable<IGetRecordResponse[]> {

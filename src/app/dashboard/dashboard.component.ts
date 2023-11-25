@@ -132,12 +132,9 @@ export class DashboardComponent implements OnInit{
       userEmails: this.selectedUsers.map(u => u.email),
     } as IInviteRequestDTO).subscribe( {
       next: r => {
-        if(Array.isArray(r)){
-          this.notify.pushMany(r)
-        }else {
-          this.notify.push(r)
-        }
-      }
+        this.notify.push(r)
+      },
+      error: err => {this.notify.pushMany(err.error)}
     })
   }
 }

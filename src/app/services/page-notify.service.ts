@@ -53,7 +53,7 @@ export class PageNotifyService {
       let message = this.buffer.shift()!;
       this.showMessage(message);
 
-    }, 2000);
+    }, 3000);
   }
 
   private showMessage(message: string) {
@@ -63,7 +63,7 @@ export class PageNotifyService {
     let snackBarRef = this._snackBar.open(message, "OK", {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      duration: 2000
+      duration: 3000
     });
   }
 }

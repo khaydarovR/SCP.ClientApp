@@ -21,19 +21,9 @@ export class SafeAccessService {
     return this.client.get<Array<IGetUserResponse>>(BASE_URL + 'api/SafeAccess/GetLinkedUsers')
   }
 
-  public sendInviteRequest(request: IInviteRequestDTO): Observable<string | string[]> {
+  public sendInviteRequest(request: IInviteRequestDTO): Observable<string> {
     const url = BASE_URL + 'api/SafeAccess/InviteRequest';
-
-    return this.client.post(url, request, { observe: 'response' })
-      .pipe(
-        map(response => {
-          let res = response.body
-          return res as string;
-        }),
-        catchError(error => {
-          return throwError(() => error.error instanceof Array ? error.error : ['An error occurred']);
-        })
-      );
+    return this.client.post<string>(url, request)
   }
 
 }

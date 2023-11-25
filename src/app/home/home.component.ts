@@ -38,13 +38,15 @@ export class HomeComponent {
   }
 
   onRecSelectedInChild(safe: IGetRecordResponse) {
-    this.recordService.readRecord(safe.id).then(r =>{
-      console.log(r.title)
-      console.log(r.eLogin)
-      console.log(r.ePw)
-      console.log(r.eSecret)
-      this.recordToSend = r
-    })
+    this.recordService.readRecord(safe.id).subscribe({
+      next: r => {
+        this.recordToSend = r
+      },
+      error: err => {
+        this.notify.pushMany(err.error)
+      }
+    }
+    )
   }
 
 
