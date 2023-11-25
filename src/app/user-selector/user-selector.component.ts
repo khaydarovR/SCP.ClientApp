@@ -32,7 +32,7 @@ export class UserSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.saService.GetLinkedUsers().subscribe({
-      next: r => this.users = r,
+      next: r => this.allUsers = r,
       error: e => console.log(e)
     })
   }

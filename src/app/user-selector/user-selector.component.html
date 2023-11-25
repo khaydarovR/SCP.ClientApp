@@ -21,7 +21,7 @@
                (matChipInputTokenEnd)="add($event)"/>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
           @for (u of filteredUsers | async; track u) {
-          <mat-option [value]="u">{{u.email}}: {{u.userName}}</mat-option>
+          <mat-option [value]="u">{{u.userName}} -> {{u.email}}</mat-option>
           }
         </mat-autocomplete>
       </mat-form-field>
