@@ -8,6 +8,7 @@ import {BASE_URL} from "../data/myConst";
 import {catchError, map, Observable, of, tap, throwError} from "rxjs";
 import {IGetUserResponse} from "../remote/response/IGetUserResponse";
 import {IInviteRequestDTO} from "../remote/dto/IInviteRequestDTO";
+import {IPatchPerDTO} from "../remote/dto/PatchPerDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,11 @@ export class SafeAccessService {
   public sendInviteRequest(request: IInviteRequestDTO): Observable<string> {
     const url = BASE_URL + 'api/SafeAccess/InviteRequest';
     return this.client.post<string>(url, request)
+  }
+
+  public patchPermissionsInSafe(request: IPatchPerDTO){
+    const url = BASE_URL + 'api/SafeAccess/PatchPer';
+    return this.client.post(url, request)
   }
 
 }

@@ -7,12 +7,15 @@ import {MatIconModule} from "@angular/material/icon";
 import {CdkDragDrop, CdkDropList, moveItemInArray} from "@angular/cdk/drag-drop";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatListModule} from "@angular/material/list";
-import {IGetUserResponse} from "../../remote/response/IGetUserResponse";
+
+import {MatSliderModule} from "@angular/material/slider";
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-permision-selector',
   standalone: true,
-  imports: [CommonModule, MatCheckboxModule, ReactiveFormsModule, MatIconModule, CdkDropList, MatChipsModule, MatListModule],
+  imports: [CommonModule, FormsModule, MatCheckboxModule, ReactiveFormsModule, MatIconModule, CdkDropList, MatChipsModule, MatListModule, MatSliderModule],
   templateUrl: './permision-selector.component.html',
   styleUrl: './permision-selector.component.css'
 })
@@ -25,6 +28,7 @@ export class PermisionSelectorComponent implements OnInit{
 
   selectedPermisions: Permision[] = []
 
+  userAccessLevel = 3;
 
  constructor(private perSer: PermisionService, private _formBuilder: FormBuilder) {}
 

@@ -1,5 +1,7 @@
 <div class="col shadow-sm p-2 m-1 mx-0 rounded-4" style="background-color: {{bgColor}}">
 
+  <mat-slider [max]="12" showTickMarks="true" [discrete]="true" class="w-75">
+    <input matSliderThumb [(ngModel)]="userAccessLevel" #slider>  </mat-slider>
   <h3>Выбор разрешений для сейфа</h3>
 
 

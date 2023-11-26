@@ -5,6 +5,7 @@ import {catchError, map, Observable, of, tap} from "rxjs";
 import {BASE_URL} from "../data/myConst";
 import {PageNotifyService} from "./page-notify.service";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
+import {ISafeStatResponse} from "../remote/response/ISafeStatResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,12 @@ export class SafeService {
         return of(e.error);
       })
     );
+  }
+
+  getStatForSafe(sId: string){
+    return this.client.get<ISafeStatResponse>(BASE_URL + 'api/Safe/GetStat', {
+      params: {sid: sId}
+    })
   }
 
 }

@@ -13,26 +13,46 @@
       <div class="col ">
 
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-5 g-4">
 
           <div class="col">
             <div class="card rounded-4 stat">
-              <div class="card-body">
-                <h2 class="card-title">Card title</h2>
+              <div class="">
+                <h1 class="fw-bold" style="font-size: xxx-large">{{_safeStat?.usersCanReadSec}}</h1>
+                <h6 class="">Читателя</h6>
               </div>
             </div>
           </div>
 
           <div class="col">
             <div class="card rounded-4 stat">
-              <div class="card-body">
-                <h2 class="card-title">Card title</h2>
+              <div class="">
+                <h1 class="fw-bold" style="font-size: xxx-large">{{_safeStat?.usersCanEditPer}}</h1>
+                <h6 class="">Админа</h6>
               </div>
             </div>
           </div>
 
           <div class="col">
-            <div class="card rounded-4 lt w-75">
+            <div class="card rounded-4 stat">
+              <div class="">
+                <h1 class="fw-bold" style="font-size: xxx-large">{{_safeStat?.secretsAmount}}</h1>
+                <h6 class="">Секрета</h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card rounded-4 stat border-0">
+              <div class="">
+                <h1 class="fw-bold" style="font-size: xxx-large">{{_safeStat?.safeUsersAmount}}</h1>
+                <h6 class="">Пользователя</h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card rounded-4 lt">
               <div class="card-body">
                 <mat-select class="text-white" [(value)]="selectedSafeId">
                   @for (s of _safes; track s) {
@@ -71,28 +91,26 @@
               <div class="">
                 <div class="d-flex justify-content-between m-0 p-0">
                   <div class="">
-                    <button class="m-2" mat-mini-fab color="white">
+                    <button (click)="onPatchPermissionsInSafe()" class="m-2" mat-mini-fab color="white">
                       <mat-icon>done_outline</mat-icon>
                     </button>
 
                   </div>
 
-                  <div>
-                    <button class="m-2" mat-mini-fab color="white">
-                      <mat-icon>keyboard_double_arrow_up</mat-icon>
-                    </button>
-                    <button class="m-2" mat-mini-fab color="white">
-                      <mat-icon>keyboard_double_arrow_down</mat-icon>
-                    </button>
+                  <div class="rounded-4 shadow-lg mx-1 me-2 d-flex align-items-center" style="background-color: #4f4789">
+                    <input [(ngModel)]="_dayLife" type="number" placeholder="Срок действия (дн.)" class="form-control bg-dark text-white flex-grow-1">
                   </div>
 
                 </div>
               </div>
             </div>
-            <div class="card rounded-4 my-4 mx-2 stat" >
-              <div class="card-body">
+            <div class="card rounded-4 my-4 mx-2 lt" >
+              <div class="card-body text-white">
                 <h6 class="card-title rounded-4 px-2" style="background-color: #4F4789FF">{{_selectedUser?.id}}</h6>
+                <mat-divider></mat-divider>
                 <h1 class="card-title">{{_selectedUser?.userName}}</h1>
+                <mat-divider></mat-divider>
+
                 <h2 class="card-title">{{_selectedUser?.email}}</h2>
 
               </div>
@@ -101,7 +119,7 @@
 
           <div class="col">
             <div class="">
-              <app-permision-selector #permisionSelector bgColor="#201335"></app-permision-selector>
+              <app-permision-selector (sendSelectedPerEvent)="getSelectedPer($event)" #permisionSelector bgColor="#201335"></app-permision-selector>
             </div>
           </div>
 
