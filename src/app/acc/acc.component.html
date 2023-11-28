@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-6 ">
+      <div class="rounded-4 shadow-lg my-3 p-2" style="background-color: #fcec52">
+        <div class="d-flex justify-content-between m-0 p-0">
+          <div>
+            <button class="mx-4" mat-mini-fab color="white">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <div class="m-4">
+              <h1>Ваш уникальный идентификатор</h1>
+              <h4>{{userId}}</h4>
+
+              <h2 class="">Имя пользователя: {{userName}}</h2>
+              <h1>Токен для расширения: </h1>
+              <h6 class="text-break">{{tokenE}}</h6>
+            </div>
+
+          </div>
+
+          <div>
+            <button mat-mini-fab color="white">
+              <mat-icon>visibility</mat-icon>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 ">
+      <div class="rounded-4 shadow-lg my-3 p-2" style="background-color: #fcec52">
+        <div class="d-flex justify-content-between m-0 p-0">
+          <div>
+            <h1>Генерация ключей доступа</h1>
+            <input [(ngModel)]="dayLife" class="form-control" placeholder="Срок разрешения (дн.)">
+
+            <input [(ngModel)]="keyName" class="form-control" placeholder="Название ключа">
+
+            <div class="col">
+              <div class="card rounded-4 lt">
+                <div class="card-body">
+                  <mat-select class="text-bg-dark" [(value)]="selectedSafeId">
+                    @for (s of _safes; track s) {
+                    <mat-option [value]="s.id">{{s.title}}</mat-option>
+                    }
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            <button class="rounded-3" (click)="createKey()" mat-raised-button color="white">Добавить</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="rounded-4 shadow-lg m-3 p-2" style="background-color: #fcec52">
+        <div class="card m-2 p-2" *ngFor="let k of keys">
+          <h1>{{k.name}}</h1>
+          <h3>Идентификатор: {{k.id}}</h3>
+          <h3>Срок годности: {{k.deadDate | date:'short'}}</h3>
+          <h3>Для сейфа: {{k.safeName}}</h3>
+          <h5 class="bg-dark-subtle rounded-4 p-3">{{k.key}}</h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

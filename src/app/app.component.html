@@ -26,15 +26,19 @@
           <button (click)="drawer.toggle()" mat-icon-button class="example-icon">
             <mat-icon>menu</mat-icon>
           </button>
-          <span>My App</span>
+          <span>Bank of Secrets</span>
           <span class="example-spacer"></span>
           <button mat-icon-button class="example-icon favorite-icon">
-            <mat-icon>favorite</mat-icon>
+            <mat-icon>key</mat-icon>
           </button>
           <button mat-icon-button class="example-icon">
             <mat-icon>share</mat-icon>
           </button>
+          <button routerLink="acc" mat-icon-button class="example-icon">
+            <mat-icon>person</mat-icon>
+          </button>
           <span *ngIf="isAuth">{{sessia?.userName}}</span>
+
         </mat-toolbar>
 
 
