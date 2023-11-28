@@ -25,6 +25,6 @@ export class KeyService {
 
   public Delete(kId: string){
     const url = BASE_URL + 'api/ApiKey/Delete';
-    return this.client.get<boolean>(url, {params: {keyId: kId}})
+    return this.client.post<boolean>(url, {}, {params: {keyId: kId}})
   }
 }

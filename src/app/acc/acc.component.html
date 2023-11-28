@@ -70,6 +70,7 @@
           <h3>Срок годности: {{k.deadDate | date:'short'}}</h3>
           <h3>Для сейфа: {{k.safeName}}</h3>
           <h5 class="bg-dark-subtle rounded-4 p-3">{{k.key}}</h5>
+          <button class="btn btn-dark" (click)="deleteKey(k.id)">УДАЛИТЬ</button>
         </div>
       </div>
     </div>

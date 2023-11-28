@@ -70,4 +70,16 @@ export class AccComponent implements OnInit{
       }
     })
   }
+
+  deleteKey(id: string) {
+    this.keyServ.Delete(id).subscribe({
+      next: r => {
+        if (r === true){
+          this.notify.push("Успешно")
+        }else {
+          this.notify.push('Ошибка')
+        }
+      }
+    })
+  }
 }
