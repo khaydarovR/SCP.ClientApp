@@ -27,4 +27,15 @@ export class KeyService {
     const url = BASE_URL + 'api/ApiKey/Delete';
     return this.client.post<boolean>(url, {}, {params: {keyId: kId}})
   }
+
+  public blockKey(kId: string, isBlock: boolean){
+    const url = BASE_URL + 'api/ApiKey/Block';
+    return this.client.post<boolean>(url, {}, {
+      params: {
+        keyId: kId,
+        isBlock: isBlock
+      }
+    })
+  }
+
 }

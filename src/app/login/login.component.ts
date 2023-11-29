@@ -17,20 +17,41 @@ import {PageNotifyService} from "../services/page-notify.service";
 export class LoginComponent {
   email = '';
   password = '';
+  twoFACode: string = '';
+  codeIsSend = false;
   constructor(private authService: AuthService, private pushNotifyService: PageNotifyService) {
   }
 
   onSubmit() {
-    console.log(this.email)
-    if (this.email && this.password) {
-      this.authService.login(this.email, this.password).subscribe(response => {
-        if (response) {
-          this.pushNotifyService.push('Успешно')
-          location.assign("home")
-        } else {
-          this.pushNotifyService.push('Логин или пароль не верный')
+    if (!this.codeIsSend){
+      this.authService.sendCode(this.email).subscribe(
+        {
+          next: r => {
+            if (r === true){
+              this.pushNotifyService.push('Подтвредите вход с кодом из письма')
+            }
+            else {
+              this.pushNotifyService.push('ОШибка отправки кода')
+            }
+          }
         }
-      });
+      )
     }
+
+    if (this.codeIsSend){
+      if (this.email && this.password) {
+        this.authService.login(this.email, this.password, this.twoFACode).subscribe(response => {
+          if (response) {
+            this.pushNotifyService.push('Успешно')
+            location.assign("home")
+          } else {
+            this.pushNotifyService.push('Логин или пароль не верный')
+          }
+        });
+      }
+    }
+
+    this.codeIsSend = true
+
   }
 }

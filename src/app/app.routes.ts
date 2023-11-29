@@ -10,6 +10,7 @@ import {CreateRecordComponent} from "./create-record/create-record.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {UserManagerComponent} from "./user-manager/user-manager.component";
 import {AccComponent} from "./acc/acc.component";
+import {LogsComponent} from "./logs/logs.component";
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
   {
     path: 'u-m/:id',
     component: UserManagerComponent,
+  },
+  {
+    path: 'rlogs/:rid',
+    component: LogsComponent,
   },
   {
     path: 'acc',

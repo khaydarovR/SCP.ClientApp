@@ -1,0 +1,33 @@
+<div class="container">
+
+  <div class="rounded-4">
+    <div class="card text-dark mb-3 border-0 rounded-4" style="background: linear-gradient(to top left , #fcec52, #fcec52);">
+
+      <div class="card-header">
+
+        <nav class="navbar navbar-light justify-content-between">
+          <a class="navbar-brand">Все зарегистрированные события</a>
+        </nav>
+
+      </div>
+
+
+      <div class="card-body">
+
+        <div *ngFor="let l of _logs">
+          <div class="card my-2 border-0 rounded-4" style="background-color: #ffffff; cursor: pointer">
+            <div class="card-body">
+              <h2 class="card-title rounded-4" style="color: black; font-size: x-large;">
+                {{l?.logText}}</h2>
+              <h3 class="card-text text-end my-0" style="color: grey">{{l?.at | date:'short' }}</h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

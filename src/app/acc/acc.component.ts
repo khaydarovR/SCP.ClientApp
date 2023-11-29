@@ -9,6 +9,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse";
 import {SafeService} from "../services/safe.service";
 import {PageNotifyService} from "../services/page-notify.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-acc',
@@ -34,7 +35,10 @@ export class AccComponent implements OnInit{
     return this._selectedSafeId;
   }
 
-  constructor(private keyServ: KeyService, private safeServ: SafeService, private notify: PageNotifyService) {
+  constructor(private keyServ: KeyService,
+              private safeServ: SafeService,
+              private notify: PageNotifyService,
+              private acc: AuthService) {
   }
 
   ngOnInit(): void {
@@ -63,6 +67,7 @@ export class AccComponent implements OnInit{
       next: r => {
         if (r === true){
           this.notify.push("Успешно")
+          this.ngOnInit()
         }
         else {
           this.notify.push('Ошибка')
@@ -76,10 +81,40 @@ export class AccComponent implements OnInit{
       next: r => {
         if (r === true){
           this.notify.push("Успешно")
+          this.ngOnInit()
         }else {
           this.notify.push('Ошибка')
         }
       }
     })
+  }
+
+    blockApiKey(id: string, isb: boolean) {
+      this.keyServ.blockKey(id, isb).subscribe({
+        next: r => {
+          if (r === true){
+            this.notify.push("Усешно")
+            this.ngOnInit()
+          }
+          else {
+            this.notify.push("Ошибка")
+          }
+        }
+      })
+    }
+
+  facOn(fa: boolean) {
+    let user = this.acc.getSession();
+    if (user?.id){
+      this.acc.change2Fa(user?.id, fa).subscribe({
+        next: r => {
+          if (r === true){
+            this.notify.push("Успешно")
+          }else {
+            this.notify.push("Ошибка")
+          }
+        }
+      });
+    }
   }
 }

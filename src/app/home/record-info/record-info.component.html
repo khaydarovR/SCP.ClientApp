@@ -12,6 +12,10 @@
           </button>
         </div>
 
+        <button (click)="showLogs()" mat-mini-fab color="white">
+          <mat-icon>history</mat-icon>
+        </button>
+
         <button (click)="onDelete(!deleteMod)" mat-mini-fab color="{{deleteMod?'warn':'white'}}">
           <mat-icon>delete</mat-icon>
         </button>

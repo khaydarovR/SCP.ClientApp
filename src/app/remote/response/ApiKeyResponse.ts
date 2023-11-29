@@ -5,5 +5,6 @@ export interface IApiKeyResponse {
   deadDate: string;
   ownerId: string;
   safeId: string;
+  isBlocked: boolean;
   safeName: string;
 }

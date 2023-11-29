@@ -8,22 +8,24 @@ import {IReadRecordResponse} from "../../remote/response/IReadRecordResponse";
 import {MatChipsModule} from "@angular/material/chips";
 import {PageNotifyService} from "../../services/page-notify.service";
 import {RecordService} from "../../services/record.service";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-record-info',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatSlideToggleModule, FormsModule, MatChipsModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatSlideToggleModule, FormsModule, MatChipsModule, RouterLink],
   templateUrl: './record-info.component.html',
   styleUrl: './record-info.component.css'
 })
 export class RecordInfoComponent implements OnInit {
+  [x: string]: any;
   _originalRecord!: IReadRecordResponse
   @Input() currentSafeId?: string
   isShow = false
   editMod = false
   deleteMod = false
 
-  constructor(private notify: PageNotifyService, private  recordService: RecordService) {
+  constructor(private notify: PageNotifyService, private  recordService: RecordService, private router: Router) {
   }
 
   private _inputRec: IReadRecordResponse = {
@@ -113,5 +115,9 @@ export class RecordInfoComponent implements OnInit {
         this.notify.push('Ошибка')
       }
     })
+  }
+
+  showLogs() {
+    this.router.navigate(['rlogs', this._inputRec.id]);
   }
 }

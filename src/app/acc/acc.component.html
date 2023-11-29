@@ -9,15 +9,23 @@
               <mat-icon>edit</mat-icon>
             </button>
 
-            <div class="m-4">
+            <div class="m-4 p-2">
+
               <h1>Ваш уникальный идентификатор</h1>
               <h4>{{userId}}</h4>
 
               <h2 class="">Имя пользователя: {{userName}}</h2>
               <h1>Токен для расширения: </h1>
-              <h6 class="text-break">{{tokenE}}</h6>
+              <h6 class="text-break text-bg-light p-2 rounded-4">{{tokenE}}</h6>
             </div>
 
+            <button (click)="facOn(true)" class="btn btn-warning" color="white">
+              Включить двухфакторную авторизацию
+            </button>
+
+            <button (click)="facOn(false)" class="btn btn-warning" color="white">
+              Выключить двухфакторную авторизацию
+            </button>
           </div>
 
           <div>
@@ -33,17 +41,17 @@
 
     <div class="col-6 ">
       <div class="rounded-4 shadow-lg my-3 p-2" style="background-color: #fcec52">
-        <div class="d-flex justify-content-between m-0 p-0">
+        <div class="d-flex justify-content-between m-2 p-2">
           <div>
             <h1>Генерация ключей доступа</h1>
-            <input [(ngModel)]="dayLife" class="form-control" placeholder="Срок разрешения (дн.)">
+            <input [(ngModel)]="dayLife" class="form-control my-2" placeholder="Срок разрешения (дн.)">
 
-            <input [(ngModel)]="keyName" class="form-control" placeholder="Название ключа">
+            <input [(ngModel)]="keyName" class="form-control my-2" placeholder="Название ключа">
 
             <div class="col">
               <div class="card rounded-4 lt">
                 <div class="card-body">
-                  <mat-select class="text-bg-dark" [(value)]="selectedSafeId">
+                  <mat-select class="text-dark" [(value)]="selectedSafeId">
                     @for (s of _safes; track s) {
                     <mat-option [value]="s.id">{{s.title}}</mat-option>
                     }
@@ -70,6 +78,9 @@
           <h3>Срок годности: {{k.deadDate | date:'short'}}</h3>
           <h3>Для сейфа: {{k.safeName}}</h3>
           <h5 class="bg-dark-subtle rounded-4 p-3">{{k.key}}</h5>
+          <h5 class="bg-warning-subtle">Статус: {{k.isBlocked?"Заблокирован": "Активен"}}</h5>
+          <button class="btn btn-warning" (click)="blockApiKey(k.id, true)">Заблокировать</button>
+          <button class="btn btn-warning" (click)="blockApiKey(k.id, false)">Активировать</button>
           <button class="btn btn-dark" (click)="deleteKey(k.id)">УДАЛИТЬ</button>
         </div>
       </div>

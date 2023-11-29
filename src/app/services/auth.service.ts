@@ -37,8 +37,8 @@ export class AuthService {
     );
   }
 
-  login(login: string, pw: string): Observable<ISignInResponse | undefined> {
-    return this.client.get<ISignInResponse>(BASE_URL + `api/Auth/SignIn?Email=${login}&Password=${pw}`).pipe(
+  login(login: string, pw: string, fac: string): Observable<ISignInResponse | undefined> {
+    return this.client.get<ISignInResponse>(BASE_URL + `api/Auth/SignIn?Email=${login}&Password=${pw}&fac=${fac}`).pipe(
       tap(response => {
         this.setSession(response);
       }),
@@ -46,6 +46,29 @@ export class AuthService {
         return of(undefined);
       })
     );
+  }
+
+
+  sendCode(login: string): Observable<boolean | undefined> {
+    return this.client.post<boolean>(BASE_URL + `api/Auth/Code2FA?email=${login}`, {}).pipe(
+      tap(response => {
+        return response
+      }),
+      catchError((e) => {
+        return of(undefined);
+      })
+    );
+  }
+
+
+  public change2Fa(uId: string, isOn: boolean){
+    const url = BASE_URL + 'api/Auth/Activ2FA';
+    return this.client.post<boolean>(url, {}, {
+      params: {
+        uId: uId,
+        isOn: isOn
+      }
+    })
   }
 
   setSession(response: ISignInResponse){

@@ -9,6 +9,7 @@ import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IReadRecordDTO} from "../remote/dto/IReadRecordDTO";
 import {IGetRecordResponse} from "../remote/response/GetRecordResponseю";
 import {IPatchRecordDTO} from "../remote/dto/IPatchRecordDTO";
+import {IRLogsResponse} from "../remote/response/IRLogsResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -154,6 +155,10 @@ export class RecordService {
   getAllRecords(safeId: string):Observable<IGetRecordResponse[]> {
     return this.sendRequestForGetAllRecords(safeId)
 
+  }
+
+  getLogs(recId: string):Observable<IRLogsResponse[]> {
+    return this.http.get<IRLogsResponse[]>(`${BASE_URL}api/Record/Logs?rId=${recId}`);
   }
 
   private sendRequestForGetAllRecords(safeId: string){
