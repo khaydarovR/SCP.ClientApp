@@ -20,6 +20,12 @@ export class PermisionService {
       params: {sId, uId}
     })
   }
+
+  public justInvite(safeId: string, email: string){
+    return this.client.post(BASE_URL + 'api/SafeAccess/JustInvite', {}, {
+      params: {safeId: safeId, email: email}, responseType: "text"
+    })
+  }
 }
 
 export class Permision {

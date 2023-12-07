@@ -36,13 +36,10 @@ export class RsaCryptoService {
     return privateKeyFromPem.decrypt(bytes);
   }
 
-
-
     hash(data: string): string {
         let hash = jsrsasign.KJUR.crypto.Util.hashString(data, 'sha256');
         return hash;
     }
-
 
     encrypt(message: string, publicKeyBase64: string): string {
         let publicKey = publicKeyBase64

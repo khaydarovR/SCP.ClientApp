@@ -70,7 +70,6 @@ export class AuthService {
       }
     })
   }
-
   setSession(response: ISignInResponse){
     let session: ISessia = { id: response.userId, jwt: response.jwt, userName: response.userName};
     localStorage.setItem('id', session.id);
@@ -95,7 +94,6 @@ export class AuthService {
     }
     return null;
   }
-
   logout() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");

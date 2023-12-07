@@ -135,4 +135,16 @@ export class UserManagerComponent implements OnInit{
     console.log($event)
     this.userPermissions = $event
   }
+
+  justInvite() {
+    this.perSer.justInvite(this._selectedSafeId, this._searchUserText).subscribe({
+        next: r => {
+          this.notify.push(r)
+        },
+        error: e => {
+          console.log(e)
+          this.notify.push(e.error)
+        }
+    })
+  }
 }
