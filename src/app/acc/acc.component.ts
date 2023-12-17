@@ -117,4 +117,8 @@ export class AccComponent implements OnInit{
       });
     }
   }
+
+  renewKey(id: string) {
+    
+  }
 }

@@ -1,24 +1,27 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {PageNotifyService} from "../services/page-notify.service";
+import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, GoogleSigninButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   username = '';
   email = '';
   password = '';
   password2 = '';
 
-  constructor(private authService: AuthService, private pushNotifyService: PageNotifyService) {
+  constructor(private authService: AuthService,
+              private pushNotifyService: PageNotifyService,
+              private socialAuthService: SocialAuthService) {
   }
 
   onSubmitRegister() {
@@ -60,5 +63,13 @@ export class RegisterComponent {
   private isValidEmail(email: string): boolean {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
+  }
+
+
+  ngOnInit(): void {
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log(user)
+      //perform further logics
+    });
   }
 }

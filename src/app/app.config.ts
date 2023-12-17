@@ -7,12 +7,38 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@ang
 import {JwtInterceptorService} from "./services/jwt-interceptor.service";
 import {DecimalPipe} from "@angular/common";
 
+import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+
+
 export const appConfig: ApplicationConfig = {
+
   providers: [
     provideRouter(routes),
+
     provideAnimations(),
+
     provideHttpClient(withInterceptorsFromDi()),
+
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
+
     DecimalPipe,
+
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,      
+            provider: new GoogleLoginProvider('313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com')
+          }
+        ],
+        onError: (error) => {
+          console.error(error);
+        }
+      } as SocialAuthServiceConfig,
+
+      //other
+    }
   ],
 };
