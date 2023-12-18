@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, Observable, of, Subject, tap} from "rxjs";
 import {BASE_URL} from "../data/myConst";
 import {ISignInResponse} from "../remote/response/ISignInResponse";
@@ -101,4 +101,22 @@ export class AuthService {
     this.sessionSubject.next(null);
   }
 
+
+  private googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+  private redirectUri = 'https://localhost:7192/api/OAuth/Google';
+  private clientId = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com'; // Replace with your actual client ID
+  sendGoogleAuthRequest(): Observable<any> {
+    const scope = 'https://www.googleapis.com/auth/userinfo.profile';
+    const responseType = 'code';
+    const prompt = 'consent';
+    const accessType = 'offline';
+
+    const url = `${this.googleAuthUrl}?redirect_uri=${encodeURIComponent(this.redirectUri)}&client_id=${this.clientId}&scope=${encodeURIComponent(scope)}&response_type=${responseType}&prompt=${prompt}&access_type=${accessType}`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+
+    return this.client.get(url, { headers: headers });
+  }
 }

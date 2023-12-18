@@ -8,10 +8,9 @@ import {JwtInterceptorService} from "./services/jwt-interceptor.service";
 import {DecimalPipe} from "@angular/common";
 
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-
+import {OAuthLogger, OAuthService, UrlHelperService} from "angular-oauth2-oidc";
 
 export const appConfig: ApplicationConfig = {
-
   providers: [
     provideRouter(routes),
 
@@ -29,7 +28,7 @@ export const appConfig: ApplicationConfig = {
         autoLogin: false,
         providers: [
           {
-            id: GoogleLoginProvider.PROVIDER_ID,      
+            id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider('313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com')
           }
         ],
