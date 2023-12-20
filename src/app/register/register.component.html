@@ -41,8 +41,7 @@
                 </div>
 
 
-
-              <button class="btn btn-dark" (click)="OauthLoginFlow()">SEND CODE</button>
+              <a class="btn btn-dark" [href]="googleAuthUrlGen" >GOOGLE</a>
 
                 <p class="text-center text-muted mt-5 mb-0">Have already an account? <a routerLink="/login"
                                                                                         class="fw-bold text-body">

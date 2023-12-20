@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {PageNotifyService} from "../services/page-notify.service";
 import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { OAuthService } from 'angular-oauth2-oidc';
 import {AppModule} from "../app.module";
 import {Observable} from "rxjs";
+import * as https from "https";
 
 @Component({
   selector: 'app-register',
@@ -22,20 +23,36 @@ export class RegisterComponent implements OnInit{
   email = '';
   password = '';
   password2 = '';
+  jwtToken  = '';
 
-  private googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-  private redirectUri2 = 'https://localhost:7192/api/OAuth/Google';
-  private redirectUri3 = window.location.origin + '/index.html';
-  private redirectUri = 'http://localhost:4200/register';
+  private redirectUri = 'https://localhost:7192/api/OAuth/Google';
   private clientId = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com';
+  private scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
   constructor(private authService: AuthService,
               private pushNotifyService: PageNotifyService,
               private socialAuthService: SocialAuthService,
               private http: HttpClient,
-              private oauthService: OAuthService) {
+              private oauthService: OAuthService,
+              private route: ActivatedRoute) {
     oauthService.redirectUri = this.redirectUri
     oauthService.clientId = this.clientId
-    oauthService.loginUrl = this.googleAuthUrl;
+  }
+
+  ngOnInit(): void {
+    this.googleAuthUrlGen = `https://accounts.google.com/o/oauth2/v2/auth`+
+      `?redirect_uri=${this.redirectUri}`+
+      `&prompt=consent`+
+      `&response_type=code`+
+      `&client_id=${this.clientId}`+
+      `&scope=${this.scope}`+
+      `&access_type=offline`
+
+    this.route.queryParams.subscribe(params => {
+      if (params['jwt']) {
+        this.jwtToken = params['jwt'];
+          console.log(this.jwtToken);
+      }
+    });
   }
 
   onSubmitRegister() {
@@ -79,16 +96,8 @@ export class RegisterComponent implements OnInit{
     return emailPattern.test(email);
   }
 
-  OauthLoginFlow() {
-    // this.authService.sendGoogleAuthRequest().subscribe({
-    //   next: r => console.log(r),
-    //   error: e => console.log(e)
-    // });
-    this.oauthService.initCodeFlow();
-  }
 
-  ngOnInit(): void {
+  public googleAuthUrlGen: string = ""
 
-  }
 
 }

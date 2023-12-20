@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, Observable, of, Subject, tap} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
+import {catchError, filter, map, Observable, of, Subject, switchMap, tap, throwError} from "rxjs";
 import {BASE_URL} from "../data/myConst";
 import {ISignInResponse} from "../remote/response/ISignInResponse";
 import {ICreateAccountDTO} from "../remote/dto/ICreateAccountDTO";
 import {PageNotifyService} from "./page-notify.service";
 import {ISessia} from "../data/sessia";
+
 
 @Injectable({
   providedIn: 'root'
@@ -104,19 +105,35 @@ export class AuthService {
 
   private googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
   private redirectUri = 'https://localhost:7192/api/OAuth/Google';
-  private clientId = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com'; // Replace with your actual client ID
-  sendGoogleAuthRequest(): Observable<any> {
-    const scope = 'https://www.googleapis.com/auth/userinfo.profile';
-    const responseType = 'code';
-    const prompt = 'consent';
-    const accessType = 'offline';
+  private clientId = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com';
+  OauthLoginFlow(): Observable<any> {
 
-    const url = `${this.googleAuthUrl}?redirect_uri=${encodeURIComponent(this.redirectUri)}&client_id=${this.clientId}&scope=${encodeURIComponent(scope)}&response_type=${responseType}&prompt=${prompt}&access_type=${accessType}`;
+    const params = new HttpParams()
+      .set('redirect_uri', this.redirectUri)
+      .set('prompt', 'consent')
+      .set('response_type', 'code')
+      .set('client_id', this.clientId)
+      .set('scope', 'https://www.googleapis.com/auth/userinfo.profile')
+      .set('access_type', 'offline');
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    return this.client.get(url, { headers: headers });
+    return this.client.get(this.googleAuthUrl, {
+      params: params,
+      observe: 'response',
+      responseType: 'text',
+    }).pipe(
+      catchError((error) => {
+        // Check if the response is an HTTP 302
+        if (true) {
+          const newUrl = error.headers.get('Location');
+          console.log(newUrl)
+          return this.client.get(newUrl, {
+            params: params,
+            observe: 'response',
+            responseType: 'text',
+          });
+        }
+        return throwError(error);
+      })
+    );
   }
 }
