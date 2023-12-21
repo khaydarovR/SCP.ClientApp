@@ -6,6 +6,7 @@ import {ISignInResponse} from "../remote/response/ISignInResponse";
 import {ICreateAccountDTO} from "../remote/dto/ICreateAccountDTO";
 import {PageNotifyService} from "./page-notify.service";
 import {ISessia} from "../data/sessia";
+import {IUserInfoResponse} from "../remote/response/IUserInfoResponse";
 
 
 @Injectable({
@@ -135,5 +136,14 @@ export class AuthService {
         return throwError(error);
       })
     );
+  }
+
+  GetUserInfo(userId: string) {
+    const url = BASE_URL + 'api/User/Info';
+    return this.client.get<IUserInfoResponse>(url, {
+      params: {
+        uId: userId,
+      }
+    })
   }
 }

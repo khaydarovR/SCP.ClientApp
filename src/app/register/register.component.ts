@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
 import {PageNotifyService} from "../services/page-notify.service";
@@ -8,8 +8,7 @@ import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { OAuthService } from 'angular-oauth2-oidc';
 import {AppModule} from "../app.module";
-import {Observable} from "rxjs";
-import * as https from "https";
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-register',
@@ -33,16 +32,16 @@ export class RegisterComponent implements OnInit{
               private socialAuthService: SocialAuthService,
               private http: HttpClient,
               private oauthService: OAuthService,
-              private route: ActivatedRoute) {
-    oauthService.redirectUri = this.redirectUri
-    oauthService.clientId = this.clientId
-  }
+              private route: ActivatedRoute,
+              private router: Router,
+              private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
     this.googleAuthUrlGen = `https://accounts.google.com/o/oauth2/v2/auth`+
       `?redirect_uri=${this.redirectUri}`+
       `&prompt=consent`+
       `&response_type=code`+
+      `&state=http://localhost:4200/register?jwt=`+
       `&client_id=${this.clientId}`+
       `&scope=${this.scope}`+
       `&access_type=offline`
@@ -50,7 +49,25 @@ export class RegisterComponent implements OnInit{
     this.route.queryParams.subscribe(params => {
       if (params['jwt']) {
         this.jwtToken = params['jwt'];
-          console.log(this.jwtToken);
+        const decodedToken = this.jwtHelper.decodeToken(this.jwtToken);
+        const userId = decodedToken.nameid;
+        console.log(userId)
+        this.authService.GetUserInfo(userId).subscribe({
+          next: r => {
+            this.authService.setSession({
+              userId: r.userId,
+              userName: r.userName,
+              jwt: r.jwt
+            });
+            this.router.navigate(['/home']);
+          },
+          error: err => {
+            console.error(err);
+          }
+        })
+      }
+      else {
+        console.log('jwt empty')
       }
     });
   }

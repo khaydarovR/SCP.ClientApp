@@ -9,6 +9,7 @@ import {DecimalPipe} from "@angular/common";
 
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import {OAuthLogger, OAuthService, UrlHelperService} from "angular-oauth2-oidc";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,8 +37,11 @@ export const appConfig: ApplicationConfig = {
           console.error(error);
         }
       } as SocialAuthServiceConfig,
+    },
 
-      //other
+    {
+      provide: JwtHelperService,
+      useFactory: () => new JwtHelperService()
     }
   ],
 };
