@@ -22,6 +22,28 @@ export class AuthService {
 
   }
 
+  private redirectUriGoogle = 'https://localhost:7192/api/OAuth/Google';
+  private redirectUriGitHub = 'https://localhost:7192/api/OAuth/Github';
+  private clientIdGoogle = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com';
+  private clientIdGitHub = 'ec53b6470c0c43cf1320';
+  private scopeGoogle = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+  private scopeGitHub = 'user:email';
+
+  googleAuthUrlGen = `https://accounts.google.com/o/oauth2/v2/auth`+
+    `?redirect_uri=${this.redirectUriGoogle}`+
+    `&prompt=consent`+
+    `&response_type=code`+
+    `&state=http://localhost:4200/register?jwt=`+
+    `&client_id=${this.clientIdGoogle}`+
+    `&scope=${this.scopeGoogle}`+
+    `&access_type=offline`
+
+  gitHubAuthUrlGen = `https://github.com/login/oauth/authorize`+
+    `?redirect_uri=${this.redirectUriGitHub}`+
+    `&state=http://localhost:4200/register?jwt=`+
+    `&client_id=${this.clientIdGitHub}`+
+    `&scope=${this.scopeGitHub}`
+
   register(email: string, pw: string, userName: string): Observable<boolean | string[]> {
     const data: ICreateAccountDTO = {
       email: email,

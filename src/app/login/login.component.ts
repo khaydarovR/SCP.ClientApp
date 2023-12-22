@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AuthService} from "../services/auth.service";
 import {FormsModule, NgForm} from "@angular/forms";
@@ -14,7 +14,13 @@ import {PageNotifyService} from "../services/page-notify.service";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
+  public gitHubAuthUrlGen: string = '';
+  public googleAuthUrlGen: string = '';
+  ngOnInit(): void {
+    this.googleAuthUrlGen = this.authService.googleAuthUrlGen
+    this.gitHubAuthUrlGen = this.authService.gitHubAuthUrlGen
+  }
   email = '';
   password = '';
   twoFACode: string = '';

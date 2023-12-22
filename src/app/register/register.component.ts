@@ -24,12 +24,7 @@ export class RegisterComponent implements OnInit{
   password2 = '';
   jwtToken  = '';
 
-  private redirectUriGoogle = 'https://localhost:7192/api/OAuth/Google';
-  private redirectUriGitHub = 'https://localhost:7192/api/OAuth/Github';
-  private clientIdGoogle = '313139694363-orcunjq74ubditjhrce01n8l2e8jjr8c.apps.googleusercontent.com';
-  private clientIdGitHub = 'ec53b6470c0c43cf1320';
-  private scopeGoogle = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
-  private scopeGitHub = 'user:email';
+
   constructor(private authService: AuthService,
               private pushNotifyService: PageNotifyService,
               private socialAuthService: SocialAuthService,
@@ -43,21 +38,9 @@ export class RegisterComponent implements OnInit{
   public gitHubAuthUrlGen: string = ""
 
   ngOnInit(): void {
-    this.googleAuthUrlGen = `https://accounts.google.com/o/oauth2/v2/auth`+
-      `?redirect_uri=${this.redirectUriGoogle}`+
-      `&prompt=consent`+
-      `&response_type=code`+
-      `&state=http://localhost:4200/register?jwt=`+
-      `&client_id=${this.clientIdGoogle}`+
-      `&scope=${this.scopeGoogle}`+
-      `&access_type=offline`
 
-    this.gitHubAuthUrlGen = `https://github.com/login/oauth/authorize`+
-      `?redirect_uri=${this.redirectUriGitHub}`+
-      `&state=http://localhost:4200/register?jwt=`+
-      `&client_id=${this.clientIdGitHub}`+
-      `&scope=${this.scopeGitHub}`
-
+    this.googleAuthUrlGen = this.authService.googleAuthUrlGen
+    this.gitHubAuthUrlGen = this.authService.gitHubAuthUrlGen
 
     //app get jwt page
     this.route.queryParams.subscribe(params => {
