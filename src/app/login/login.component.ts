@@ -16,10 +16,12 @@ import {PageNotifyService} from "../services/page-notify.service";
 })
 export class LoginComponent implements OnInit{
   public gitHubAuthUrlGen: string = '';
+  public giteaAuthUrlGen: string = '';
   public googleAuthUrlGen: string = '';
   ngOnInit(): void {
     this.googleAuthUrlGen = this.authService.googleAuthUrlGen
     this.gitHubAuthUrlGen = this.authService.gitHubAuthUrlGen
+    this.giteaAuthUrlGen = this.authService.giteaAuthUrlGen
   }
   email = '';
   password = '';

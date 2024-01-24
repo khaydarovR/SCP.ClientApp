@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http'
 import {catchError, firstValueFrom, map, Observable, ObservableInput, throwError} from 'rxjs';
 import {RsaCryptoService} from "./rsa-crypto.service";
 import {ICreateRecordDTO} from "../remote/dto/ICreateRecordDTO";
-import {BASE_URL} from "../data/myConst";
+import {API_BASE_URL} from "../data/myConst";
 import {EcnryptorService} from "./ecnryptor.service";
 import {IReadRecordResponse} from "../remote/response/IReadRecordResponse";
 import {IReadRecordDTO} from "../remote/dto/IReadRecordDTO";
@@ -92,7 +92,7 @@ export class RecordService {
 // Send post data function
   private async postRecordData(recordData: ICreateRecordDTO) {
     try {
-      const response = await this.http.post<boolean|string[]>(BASE_URL + this.endpointToCreate, recordData, { observe: 'response' }).toPromise();
+      const response = await this.http.post<boolean|string[]>(API_BASE_URL + this.endpointToCreate, recordData, { observe: 'response' }).toPromise();
       console.log(response);
 
       // Check status code - return boolean or errors list
@@ -125,7 +125,7 @@ export class RecordService {
   }
 
   private getPublicKeyForSafe(safeId: string): Observable<string> {
-    return this.http.get(BASE_URL + `api/Safe/Pubk/${safeId}`, {responseType: 'text'});
+    return this.http.get(API_BASE_URL + `api/Safe/Pubk/${safeId}`, {responseType: 'text'});
   }
 
 
@@ -149,7 +149,7 @@ export class RecordService {
       recId: recId
     }
 
-    return this.http.post<IReadRecordResponse>(`${BASE_URL}api/Record/Read`, data)
+    return this.http.post<IReadRecordResponse>(`${API_BASE_URL}api/Record/Read`, data)
   }
 
   getAllRecords(safeId: string):Observable<IGetRecordResponse[]> {
@@ -158,11 +158,11 @@ export class RecordService {
   }
 
   getLogs(recId: string):Observable<IRLogsResponse[]> {
-    return this.http.get<IRLogsResponse[]>(`${BASE_URL}api/Record/Logs?rId=${recId}`);
+    return this.http.get<IRLogsResponse[]>(`${API_BASE_URL}api/Record/Logs?rId=${recId}`);
   }
 
   private sendRequestForGetAllRecords(safeId: string){
-    return this.http.get<IGetRecordResponse[]>(`${BASE_URL}api/Record/GetAll?safeId=${safeId}`);
+    return this.http.get<IGetRecordResponse[]>(`${API_BASE_URL}api/Record/GetAll?safeId=${safeId}`);
   }
 
 
@@ -190,7 +190,7 @@ export class RecordService {
   private async patchRecord(recordData: IPatchRecordDTO) {
     try {
       const response = await this.http
-        .patch<boolean|string[]>(BASE_URL + this.endpointToUpdate, recordData, { observe: 'response' }).toPromise();
+        .patch<boolean|string[]>(API_BASE_URL + this.endpointToUpdate, recordData, { observe: 'response' }).toPromise();
       console.log(response);
 
       // Check status code - return boolean or errors list
