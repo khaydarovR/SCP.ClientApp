@@ -10,6 +10,7 @@ import {IGetLinkedSafeResponse} from "../remote/response/IGetLinkedSafeResponse"
 import {SafeService} from "../services/safe.service";
 import {PageNotifyService} from "../services/page-notify.service";
 import {AuthService} from "../services/auth.service";
+import { IUserInfoResponse } from '../remote/response/IUserInfoResponse';
 
 @Component({
   selector: 'app-acc',
@@ -27,6 +28,8 @@ export class AccComponent implements OnInit{
   keyName: string = ''
   userName: string = '';
   userId: string = '';
+
+  userInfo: IUserInfoResponse|null = null;
 
   set selectedSafeId(val: string) {
     this._selectedSafeId = val
@@ -55,8 +58,18 @@ export class AccComponent implements OnInit{
     this.tokenE = localStorage.getItem('jwt')?? '';
     this.userName = localStorage.getItem('name')?? '';
     this.userId = localStorage.getItem('id')?? '';
-  }
 
+    this.acc.GetUserInfo(this.userId).subscribe( {
+      next: (r: IUserInfoResponse) => {
+        console.log(r)
+        this.userInfo = r
+      },
+      error: (e) =>{
+        console.log(e)
+      }
+    })
+  
+  }
 
   createKey() {
     this.keyServ.createApiKey({
