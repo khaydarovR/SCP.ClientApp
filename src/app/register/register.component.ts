@@ -7,13 +7,12 @@ import {PageNotifyService} from "../services/page-notify.service";
 import { SocialAuthService, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { OAuthService } from 'angular-oauth2-oidc';
-import {AppModule} from "../app.module";
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, GoogleSigninButtonModule, AppModule],
+  imports: [CommonModule, RouterLink, FormsModule, GoogleSigninButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -27,9 +26,6 @@ export class RegisterComponent implements OnInit{
 
   constructor(private authService: AuthService,
               private pushNotifyService: PageNotifyService,
-              private socialAuthService: SocialAuthService,
-              private http: HttpClient,
-              private oauthService: OAuthService,
               private route: ActivatedRoute,
               private router: Router,
               private jwtHelper: JwtHelperService) {}

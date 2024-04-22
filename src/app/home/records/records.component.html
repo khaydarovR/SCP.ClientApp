@@ -5,16 +5,24 @@
 
       <nav class="navbar navbar-light justify-content-between">
         <a class="navbar-brand">Записи</a>
-        <button (click)="createRecord()" mat-mini-fab color="white" >
+        <button (click)="createRecord()" mat-mini-fab color="white">
           <mat-icon fontIcon="add"></mat-icon>
         </button>
+        <!-- <label class="btn rounded-5 bg-white">
+          <mat-icon fontIcon="download"></mat-icon>
+          <input type="file" style="display:none;" (change)="onFileSelected($event)">
+        </label> -->
+        <label class="btn rounded-5 bg-white">
+          <mat-icon fontIcon="upload"></mat-icon>
+          <input type="file" style="display:none;" (change)="onFileSelected($event)">
+        </label>
+        
       </nav>
 
     </div>
 
 
     <div class="card-body">
-
       <div *ngFor="let record of records">
         <app-record-item [record]="record" (click)="onSelectRecord(record)"></app-record-item>
       </div>
